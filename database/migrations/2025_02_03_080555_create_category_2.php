@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category', function (Blueprint $table) {
-            $table->id();
+        Schema::create('category', function (Blueprint $table) { // Consider renaming table if it conflicts with 'categories'
+            $table->uuid('id')->primary(); // Changed from id()
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('image')->nullable();

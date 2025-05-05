@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\MonthName; // Import the MonthName model
 
 class MonthSeeder extends Seeder
 {
@@ -23,11 +23,17 @@ class MonthSeeder extends Seeder
             ['name' => 'July'],
             ['name' => 'August'],
             ['name' => 'September'],
-            ['name' => 'October'],            
+            ['name' => 'October'],
             ['name' => 'November'],
             ['name' => 'December'],
         ];
 
-        DB::table('month_names')->insert($months);
+        // Iterate and create records using the MonthName model
+        // The HasUuids trait in the model will automatically generate the UUID
+        foreach ($months as $month) {
+            MonthName::create($month);
+        }
+
+        // DB::table('month_names')->insert($months); // Remove or comment out the old DB facade insert
     }
 }

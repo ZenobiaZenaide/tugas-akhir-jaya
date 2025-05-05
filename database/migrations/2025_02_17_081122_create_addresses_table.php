@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('addresses', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('user_id')->unsigned();
+            $table->uuid('id')->primary(); // Changed from id()
+            $table->uuid('user_id'); // Changed from bigInteger()->unsigned()
             $table->string('name');
             $table->string('phone');
             $table->string('locality');

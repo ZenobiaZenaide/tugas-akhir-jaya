@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('coupons', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary(); // Changed from id()
             $table->string('code')->unique();
             $table->enum('type', ['fixed','percent']);
             $table->decimal('value');
