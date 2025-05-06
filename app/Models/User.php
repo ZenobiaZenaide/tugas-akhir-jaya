@@ -14,7 +14,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable, HasUuids; // Add HasUuids trait here
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are mass assignable
      *
      * @var list<string>
      */

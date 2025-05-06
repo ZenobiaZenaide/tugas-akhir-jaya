@@ -120,7 +120,7 @@
 
                     <div
                         class="shop-acs d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
-                        <select class="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0"
+                        {{-- <select class="shop-acs__select form-select w-auto border-0 py-0 order-1 order-md-0"
                             aria-label="Sort Items" name="orderby" id="orderby">
                             <option value="-1" {{ $order == -1 ? 'selected' : '' }}>Default Sorting</option>
                             <option value="1" {{ $order == 1 ? 'selected' : '' }}>Date, New to Old</option>
@@ -130,7 +130,7 @@
 
                         </select>
 
-                        <div class="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div>
+                        <div class="shop-asc__seprator mx-3 bg-light d-none d-md-block order-md-0"></div> --}}
 
                         <div class="col-size align-items-center order-1 d-none d-lg-flex">
                             <span class="text-uppercase fw-medium me-2">View</span>

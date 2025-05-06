@@ -56,16 +56,27 @@ class CartController extends Controller
         return redirect()->back();
     }
 
-    public function apply_coupon_code(Request $request){
-        $coupon_code =  $request->coupon_code;
-        if(isset($coupon_code)){
-            $coupon = Coupon::where('code', $coupon_code)->where('expiry_date', '>=', Carbon::today())
-            ->where('cart_value', '<=', Cart::instance('cart')->subtotal())->first();
-            if(!$coupon){
+    public function apply_coupon_code(Request $request)
+    {
+
+       
+        $coupon_code = $request->coupon_code;
+    
+        if (isset($coupon_code)) {
+            // Get cart subtotal and clean it
+            $rawSubtotal = Cart::instance('cart')->subtotal(); // e.g., "8,000.00"
+            $cleanSubtotal = floatval(str_replace(',', '', $rawSubtotal)); // 8000.00
+    
+            // Find valid coupon
+            $coupon = Coupon::where('code', $coupon_code)
+                ->where('expiry_date', '>=', Carbon::today())
+                ->where('cart_value', '<=', $cleanSubtotal)
+                ->first();
+    
+            if (!$coupon) {
                 return redirect()->back()->with('error', 'Invalid coupon code!');
-            }
-            else{
-                Session::put('coupon',[
+            } else {
+                Session::put('coupon', [
                     'code' => $coupon->code,
                     'type' => $coupon->type,
                     'value' => $coupon->value,
@@ -74,33 +85,40 @@ class CartController extends Controller
                 $this->calculateDiscount();
                 return redirect()->back()->with('success', 'Coupon has been applied');
             }
-        }
-        else{
+        } else {
             return redirect()->back()->with('error', 'Invalid coupon code!');
         }
     }
+    
 
-    public function calculateDiscount(){
+    public function calculateDiscount()
+    {
         $discount = 0;
-        if(Session::has('coupon')){
-            if(Session::get('coupon')['type'] == 'fixed'){
-                $discount = Session::get('coupon')['value'];
+    
+        // Clean and convert subtotal to float
+        $rawSubtotal = Cart::instance('cart')->subtotal(); // e.g., "8,000.00"
+        $subtotal = floatval(str_replace(',', '', $rawSubtotal)); // 8000.00
+    
+        if (Session::has('coupon')) {
+            $coupon = Session::get('coupon');
+    
+            if ($coupon['type'] == 'fixed') {
+                $discount = floatval($coupon['value']);
+            } else {
+                $discount = ($subtotal * floatval($coupon['value'])) / 100;
             }
-            else{
-                $discount = (Cart::instance('cart')->subtotal() * Session::get('coupon')['value'])/100;
-            }
-
-            $subtotalAfterDiscount = Cart::instance('cart')->subtotal() - $discount;
+    
+            $subtotalAfterDiscount = $subtotal - $discount;
             $totalAfterDiscount = $subtotalAfterDiscount;
-
-            Session::put('discounts',[
-                'discount' => number_format(floatval($discount),2,'.',''),
-                'subtotal' => number_format(floatval($subtotalAfterDiscount),2,'.', ''),
-                'total' => number_format(floatval($totalAfterDiscount),2,'.','.'),
+    
+            Session::put('discounts', [
+                'discount' => number_format($discount, 2, '.', ''),
+                'subtotal' => number_format($subtotalAfterDiscount, 2, '.', ''),
+                'total' => number_format($totalAfterDiscount, 2, '.', ''),
             ]);
         }
     }
-
+    
     public function remove_coupon_code(){
         Session::forget('coupon');
         Session::forget('discounts');

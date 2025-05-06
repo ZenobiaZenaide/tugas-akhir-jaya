@@ -292,7 +292,7 @@
                     xmlns="http://www.w3.org/2000/svg">
                     <use href="#icon_cart" />
                 </svg>
-                <span class="cart-amount d-block position-absolute js-cart-items-count">3</span>
+                <span class="cart-amount d-block position-absolute js-cart-items-count"></span>
             </a>
         </div>
 
@@ -514,6 +514,12 @@
                             xmlns="http://www.w3.org/2000/svg">
                             <use href="#icon_heart" />
                         </svg>
+                        @if (Cart::instance('wishlist')->content()->count() > 0)
+                            <span
+                                style="background-color: #b9a16b!important; width: 16px; height: 16px; position: absolute; border-radius: 999px; margin-left: 12px; margin-top: 10px;"
+                                class="wishlist-amount d-block position-absolute js-cart-items-count">
+                            </span>
+                        @endif
                     </a>
 
                     <a href="cart.html" class="header-tools__item header-tools__cart">
@@ -521,7 +527,7 @@
                             xmlns="http://www.w3.org/2000/svg">
                             <use href="#icon_cart" />
                         </svg>
-                        <span class="cart-amount d-block position-absolute js-cart-items-count">3</span>
+                        <span class="cart-amount d-block position-absolute js-cart-items-count"></span>
                     </a>
                 </div>
             </div>
