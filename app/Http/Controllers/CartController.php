@@ -145,8 +145,7 @@ class CartController extends Controller
     }
 
     public function place_an_order(Request $request){
-        // dd(Auth::user()->user_id);
-        $user_id = Auth::user()->user_id;
+        $user_id = Auth::user()->id;
         $address = Address::where('user_id', $user_id)->where('isdefault', true)->first();
 
         if(!$address){
@@ -203,7 +202,7 @@ class CartController extends Controller
             // dd($item);
             $orderItem = new OrderItem();
             $orderItem->product_id = $item->id;
-            $orderItem->order_id = $order->id; // Changed from orders_id to order_id
+            $orderItem->orders_id = $order->id;
             $orderItem->price = $item->price;
             $orderItem->quantity = $item->qty;
             // dd($orderItem);
@@ -216,7 +215,7 @@ class CartController extends Controller
         elseif($request->mode == "cod"){
             $transaction = new Transaction();
             $transaction->user_id = $user_id;
-            $transaction->order_id = $order->id; // Changed from orders_id to order_id
+            $transaction->orders_id = $order->id;
             $transaction->mode = $request->mode;
             $transaction->status = "pending";
             $transaction->save();
