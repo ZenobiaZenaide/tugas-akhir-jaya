@@ -16,6 +16,6 @@ class OrderItem extends Model
     }
 
     public function order(){
-        return $this->belongsTo(Orders::class, 'orders_id'); // Ensure 'Orders' class exists or change to 'Order' if needed
+        return $this->belongsTo(Orders::class, 'order_id'); // Uses 'order_id'
     }
 }

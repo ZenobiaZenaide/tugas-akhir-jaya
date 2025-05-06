@@ -202,7 +202,7 @@ class CartController extends Controller
             // dd($item);
             $orderItem = new OrderItem();
             $orderItem->product_id = $item->id;
-            $orderItem->orders_id = $order->id;
+            $orderItem->order_id = $order->id; // Changed from orders_id to order_id
             $orderItem->price = $item->price;
             $orderItem->quantity = $item->qty;
             // dd($orderItem);
@@ -215,7 +215,7 @@ class CartController extends Controller
         elseif($request->mode == "cod"){
             $transaction = new Transaction();
             $transaction->user_id = $user_id;
-            $transaction->orders_id = $order->id;
+            $transaction->order_id = $order->id; // Changed from orders_id to order_id
             $transaction->mode = $request->mode;
             $transaction->status = "pending";
             $transaction->save();

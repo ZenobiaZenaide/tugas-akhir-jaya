@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('addresses', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // Changed from id()
-            $table->uuid('user_id'); // Changed from bigInteger()->unsigned()
+            $table->uuid('id')->primary(); // This table's ID remains uuid as it's not in the specified list
+            $table->string('user_id'); // Changed from uuid('user_id')
             $table->string('name');
             $table->string('phone');
             $table->string('locality');

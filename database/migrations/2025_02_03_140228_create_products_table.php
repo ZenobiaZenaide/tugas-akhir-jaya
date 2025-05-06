@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // Changed from id()
+            $table->string('id')->primary(); // Changed from uuid('id')
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('short_description');
@@ -25,10 +25,10 @@ return new class extends Migration
             $table->unsignedinteger('quantity')->default(10);
             $table->string('image')->nullable();
             $table->text('images')->nullable();
-            $table->uuid('category_id')->nullable(); // Changed from bigInteger()->unsigned()
-            $table->uuid('brand_id')->nullable();    // Changed from bigInteger()->unsigned()
+            $table->string('category_id')->nullable(); // Changed from uuid('category_id')
+            $table->string('brand_id')->nullable();    // Changed from uuid('brand_id')
             $table->timestamps();
-            //relation (no changes needed here, just ensure referenced columns are UUIDs)
+            //relation (foreign key constraints will still work with string IDs)
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
         });

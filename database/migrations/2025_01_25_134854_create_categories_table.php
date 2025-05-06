@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // Changed from id()
+            $table->string('id')->primary(); // Changed from uuid('id')
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('image')->nullable();
-            $table->string('parent_id')->nullable();
+            $table->string('parent_id')->nullable(); // Remains string, compatible if it references categories.id
             $table->timestamps();
         });
     }

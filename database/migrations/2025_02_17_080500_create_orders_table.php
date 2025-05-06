@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // Changed from id()
-            $table->uuid('user_id'); // Changed from bigInteger()->unsigned()
+            $table->uuid('id')->primary(); // This table's ID remains uuid
+            $table->string('user_id'); // Changed from uuid('user_id')
             $table ->decimal('subtotal');
             $table ->decimal('discount')->default(0);
             $table ->string('name');

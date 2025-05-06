@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // Changed from id()
-            $table->uuid('user_id'); // Changed from bigInteger()->unsigned()
-            $table->uuid('order_id'); // Changed from bigInteger()->unsigned()
+            $table->uuid('id')->primary(); // This table's ID remains uuid
+            $table->string('user_id'); // Changed from uuid('user_id')
+            $table->uuid('order_id'); // Remains uuid, references orders.id
             $table->enum('mode', ['cod', 'card']);
             $table->enum('status', ['pending', 'approved', 'declined', 'refunded'])->default('pending');
             $table->timestamps();
