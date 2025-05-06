@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'id' => 'admin-001', // Manually provided string ID
+                'user_id' => 'admin-001', // Manually provided string ID
                 'name' => 'Test Admin',
                 'email' => 'dev@gmail.com',
                 'mobile' => '1234567890',
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 'user-001', // Manually provided string ID
+                'user_id' => 'user-001', // Manually provided string ID
                 'name' => 'Test User',
                 'email' => 'user@gmail.com',
                 'mobile' => '1234567830',
