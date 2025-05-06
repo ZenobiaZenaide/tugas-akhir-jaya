@@ -193,14 +193,14 @@
                                                 <use href="#icon_next_sm" />
                                             </svg></span>
                                     </div>
-                                    @if (Cart::instance('cart')->content()->where('id', $product->id)->count() > 0)
+                                    @if (Cart::instance('cart')->content()->where('id', $product->product_id)->count() > 0) {{-- Changed $product->id --}}
                                         <a href="{{ route('cart.index') }}"
                                             class="pc__atc btn anim_appear-bottom btn position-absolute border-0 text-uppercase fw-medium btn btn-warning">Go
                                             to Cart</a>
                                     @else
                                         <form name="addtocart-form" method="post" action="{{ route('cart.add') }}">
                                             @csrf
-                                            <input type="hidden" name="id" value="{{ $product->id }}" />
+                                            <input type="hidden" name="id" value="{{ $product->product_id }}" /> {{-- Changed $product->id --}}
                                             <input type="hidden" name="quantity" value="1" />
                                             <input type="hidden" name="name" value="{{ $product->name }}" />
                                             <input type="hidden" name="price"
@@ -252,8 +252,8 @@
                                         <span class="reviews-note text-lowercase text-secondary ms-1">8k+ reviews</span>
                                     </div>
 
-                                    @if (Cart::instance('wishlist')->content()->where('id', $product->id)->count() > 0)
-                                    <form method="POST" action="{{ route('wishlist.item-remove', ['rowId'=>Cart::instance('wishlist')->content()->where('id', $product->id)->first()->rowId])}}">
+                                    @if (Cart::instance('wishlist')->content()->where('id', $product->product_id)->count() > 0) {{-- Changed $product->id --}}
+                                    <form method="POST" action="{{ route('wishlist.item-remove', ['rowId'=>Cart::instance('wishlist')->content()->where('id', $product->product_id)->first()->rowId])}}"> {{-- Changed $product->id --}}
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

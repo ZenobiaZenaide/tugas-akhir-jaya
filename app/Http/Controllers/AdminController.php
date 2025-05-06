@@ -257,7 +257,7 @@ class AdminController extends Controller
 
     public function product_store(Request $request){
         $request->validate([
-            'id' => 'required',
+            'product_id' => 'required|unique:products,product_id',
             'name' => 'required',
             'slug' => 'required|unique:products,slug',
             'short_description' => 'required',
@@ -275,7 +275,7 @@ class AdminController extends Controller
         ]);
 
         $product = new Product();
-        $product->id = $request->id;
+        $product->product_id = $request->product_id; // Changed from $request->id
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
         $product->short_description = $request->short_description;
@@ -338,8 +338,8 @@ class AdminController extends Controller
         })->save($destinationPathThumbnail. '/' .$imageName);
     }
 
-    public function product_edit($id){
-        $product = Product::find($id);
+    public function product_edit($product_id){ // Changed parameter from $id
+        $product = Product::find($product_id); // Changed from $id
         $categories = Category::select('id','name')->orderBy('name')->get();
         $brands = Brand::Select('brand_id','name')->orderBy('name')->get(); // Changed from 'id'
         return view('admin.product-edit', compact('product', 'categories', 'brands'));
@@ -347,8 +347,9 @@ class AdminController extends Controller
 
     public function product_update(Request $request){
         $request->validate([
+            // 'product_id' => 'required|unique:products,product_id,'.$request->product_id.',product_id', // Primary key usually not updated
             'name' => 'required',
-            'slug' => 'required|unique:products,slug,' . $request->id . ',id',
+            'slug' => 'required|unique:products,slug,' . $request->product_id . ',product_id', // Changed $request->id to $request->product_id and ',id' to ',product_id'
             'short_description' => 'required',
             'description' => 'required',
             'regular_price' => 'required',
@@ -363,7 +364,8 @@ class AdminController extends Controller
             'images.*' =>'nullable|mimes:png,jpg,jpeg|max:2048'
         ]);
 
-        $product = Product::find($request->id);
+        $product = Product::find($request->product_id); // Changed from $request->id
+        // $product->product_id = $request->product_id; // Usually primary keys are not updated.
         $product->name = $request->name;
 
         if ($product->slug !== Str::slug($request->name)) {
@@ -426,35 +428,15 @@ class AdminController extends Controller
 
     }
 
-    public function product_delete($id) {
-        $product = Product::find($id);
-        if (!$product) {
-            return redirect()->route('admin.products')->with('error', 'Product not found');
+    public function product_delete($product_id){ // Changed parameter from $id
+        $product = Product::find($product_id); // Changed from $id
+        if(File::exists(public_path('uploads/products').'/'.$product->image)){
+            File::delete(public_path('uploads/products').'/'.$product->image);
         }
-    
-        if (!empty($product->image) && File::exists(public_path('uploads/products') . '/' . $product->image)) {
-            File::delete(public_path('uploads/products') . '/' . $product->image);
-        }
-    
-        if (!empty($product->image) && File::exists(public_path('uploads/products/thumbnails') . '/' . $product->image)) {
-            File::delete(public_path('uploads/products/thumbnails') . '/' . $product->image);
-        }
-    
-        if (!empty($product->images)) {
-            foreach (explode(',', $product->images) as $ofile) {
-                $ofile = trim($ofile);  
-    
-                if (!empty($ofile) && File::exists(public_path('uploads/products') . '/' . $ofile)) {
-                    File::delete(public_path('uploads/products') . '/' . $ofile);
-                }
-    
-                if (!empty($ofile) && File::exists(public_path('uploads/products/thumbnails') . '/' . $ofile)) {
-                    File::delete(public_path('uploads/products/thumbnails') . '/' . $ofile);
-                }
-            }
+        if(File::exists(public_path('uploads/products/thumbnails').'/'.$product->image)){
+            File::delete(public_path('uploads/products/thumbnails').'/'.$product->image);
         }
         $product->delete();
-    
         return redirect()->route('admin.products')->with('status', 'Product Has Been Successfully Deleted.');
     }
 

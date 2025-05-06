@@ -41,7 +41,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Price</th>
                                 <th>SalePrice</th>
@@ -57,7 +57,7 @@
                         <tbody>
                             @foreach($products as $product)
                             <tr>
-                                <td>{{ $product->id }}</td>
+                                <td>{{ $product->product_id }}</td> {{-- Changed from $product->id --}}
                                 <td class="name">
                                     <div class="image">
                                         <img src="{{ asset('uploads/products/thumbnails')}}/{{ $product->image }}" alt="" class="image">
@@ -82,12 +82,12 @@
                                                 <i class="icon-eye"></i>
                                             </div>
                                         </a>
-                                        <a href="{{ route('admin.product-edit', ['id'=>$product->id])}}">
+                                        <a href="{{ route('admin.product-edit', ['product_id'=>$product->product_id])}}" {{-- Changed 'id' to 'product_id' --}}
                                             <div class="item edit">
                                                 <i class="icon-edit-3"></i>
                                             </div>
                                         </a>
-                                        <form action="{{ route('admin.product-delete', ['id'=> $product->id])}}" method="POST">
+                                        <form action="{{ route('admin.product-delete', ['product_id'=> $product->product_id])}}" method="POST"> {{-- Changed 'id' to 'product_id' --}}
                                             @csrf
                                             @method('DELETE')
                                             <div class="item text-danger delete">

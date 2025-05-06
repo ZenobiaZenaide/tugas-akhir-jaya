@@ -40,7 +40,7 @@ class ShopController extends Controller
                 $o_order='DESC';
                 break;
             default:
-                $o_column = 'id';
+                $o_column = 'product_id'; // Changed from 'id' to 'product_id'
                 $o_order = 'DESC';
                 
         }

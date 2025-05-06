@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->string('id')->primary(); // Changed from uuid('id')
+            $table->string('product_id')->primary(); // Changed from 'id'
             $table->string('name');
             $table->string('slug')->unique();
             $table->string('short_description');
@@ -25,12 +25,13 @@ return new class extends Migration
             $table->unsignedinteger('quantity')->default(10);
             $table->string('image')->nullable();
             $table->text('images')->nullable();
-            $table->string('category_id')->nullable(); // Changed from uuid('category_id')
-            $table->string('brand_id')->nullable();    // Changed from uuid('brand_id')
+            $table->string('category_id')->nullable();
+            $table->string('brand_id')->nullable();
             $table->timestamps();
             //relation (foreign key constraints will still work with string IDs)
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('brand_id')->references('brand_id')->on('brands')->onDelete('cascade'); // Changed 'id' to 'brand_id'
+            $table->foreign('brand_id')->references('brand_id')->on('brands')->onDelete('cascade');
+            // No change needed for foreign keys in other tables referencing products.id yet, but we'll check order_items
         });
     }
 

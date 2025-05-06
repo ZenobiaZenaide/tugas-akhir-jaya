@@ -16,7 +16,7 @@ class ProductSeeder extends Seeder
     {
         DB::table('products')->insert([
             [
-                'id' => 'prod-001', // Manually provided string ID
+                'product_id' => 'prod-001', // Changed from 'id'
                 'name' => 'Sample Product One',
                 'slug' => Str::slug('Sample Product One'),
                 'short_description' => 'This is a short description for sample product one.',

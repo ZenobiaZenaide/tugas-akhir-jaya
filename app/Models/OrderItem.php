@@ -2,20 +2,27 @@
 
 namespace App\Models;
 
-use App\Models\Product;
-use App\Models\Orders; // Note: Consider if this should be Order::class
-use Illuminate\Database\Eloquent\Concerns\HasUuids; // Add this import
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderItem extends Model
 {
-    use HasUuids; // Add this trait
+    use HasFactory;
+
+    protected $fillable = [
+        'product_id', 
+        'order_id', 
+        'price', 
+        'quantity',
+        'options',
+        'rstatus'
+    ];
 
     public function product(){
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Product::class, 'product_id', 'product_id'); // Ensure 'product_id' is the foreign key and 'product_id' is the owner key in products table
     }
 
     public function order(){
-        return $this->belongsTo(Orders::class, 'order_id'); // Uses 'order_id'
+        return $this->belongsTo(Orders::class, 'order_id');
     }
 }

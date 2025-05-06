@@ -34,7 +34,7 @@
                 @csrf
                 @method('PUT')
                 <div class="wg-box">
-                    <input type="hidden" name="id" value="{{ $product->id }}"/>
+                    <input type="hidden" name="product_id" value="{{ $product->product_id }}"/> {{-- Changed name and value --}}
                     <fieldset class="name">
                         <div class="body-title mb-10">Product ID<span class="tf-color-1">*</span>
                         </div>
