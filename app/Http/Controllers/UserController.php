@@ -26,10 +26,10 @@ class UserController extends Controller
     }
 
     public function order_details($orders_id){
-        $order = Orders::where('user_id', Auth::user()->id)->where('id', $orders_id)->first();
+        $order = Orders::where('user_id', Auth::user()->user_id)->where('id', $orders_id)->first(); // Changed Auth::user()->id to Auth::user()->user_id
         if($order){
-            $orderitems = OrderItem::where('orders_id', $orders_id)->orderBy('id')->paginate(12);
-            $transaction = Transaction::where('orders_id', $order->id)->first();
+            $orderitems = OrderItem::where('order_id', $orders_id)->orderBy('id')->paginate(12); // Changed 'orders_id' to 'order_id'
+            $transaction = Transaction::where('order_id', $order->id)->first(); // Changed 'orders_id' to 'order_id'
             return view('user.order-details', compact('order','orderitems','transaction'));
         }
         else{
