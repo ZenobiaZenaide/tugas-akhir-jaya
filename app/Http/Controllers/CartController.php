@@ -204,12 +204,13 @@ class CartController extends Controller
         foreach(Cart::instance('cart')->content() as $item){
             // dd($item);
             $orderItem = new OrderItem();
-            $orderItem->product_id = $item->id;
-            $orderItem->order_id = $order->id; // Corrected from orders_id
+            // No need to set $orderItem->id here if it's auto-generated
+            $orderItem->product_id = $item->id; // This is the product's ID from the cart
+            $orderItem->order_id = $order->id; // This is the ID of the newly created order
             $orderItem->price = $item->price;
             $orderItem->quantity = $item->qty;
             // dd($orderItem);
-            $orderItem->save();  
+            $orderItem->save();  // Error occurs here if OrderItem's own 'id' is not handled
         }
 
         if($request->mode == "card"){
