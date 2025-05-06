@@ -16,7 +16,7 @@ class BrandSeeder extends Seeder
     {
         DB::table('brands')->insert([
             [
-                'id' => 'brand-001', // Manually provided string ID
+                'brand_id' => 'brand-001', // Changed from 'id'
                 'name' => 'Awesome Brand',
                 'slug' => Str::slug('Awesome Brand'),
                 'image' => 'default-brand.png', // Optional: provide an image name/path

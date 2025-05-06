@@ -33,19 +33,13 @@
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="id" value="{{ $brand->id }}"/>
-                <fieldset class="name">
-                    <div class="body-title">Brand ID <span class="tf-color-1">*</span></div>
-                    <input class="flex-grow" type="text" placeholder="Brand ID" name="id"
-                        tabindex="0" value="{{ $brand->id }}" aria-required="true" required="" disabled="true">
-                </fieldset>
-                @error('id')
-                    <span class="alert alert-danger text-center">{{ $message}}</span>
-                @enderror
-                <fieldset class="name">
-                    <div class="body-title">Brand Name <span class="tf-color-1">*</span></div>
-                    <input class="flex-grow" type="text" placeholder="Brand name" name="name"
-                        tabindex="0" value="{{ $brand->name }}" aria-required="true" required="">
+                <input type="hidden" name="brand_id" value="{{ $brand->brand_id }}"/> {{-- Changed name from 'id' and value from $brand->id --}}
+                <div class="body-title">Brand ID <span class="tf-color-1">*</span></div>
+                <input class="flex-grow" type="text" placeholder="Brand ID" name="brand_id_display" {{-- Changed name from 'id' to 'brand_id_display' for display only --}}
+                    tabindex="0" value="{{ $brand->brand_id }}" aria-required="true" required="" disabled="true"> {{-- Changed value from $brand->id --}}
+                <div class="body-title">Brand Name <span class="tf-color-1">*</span></div>
+                <input class="flex-grow" type="text" placeholder="Brand name" name="name"
+                    tabindex="0" value="{{ $brand->name }}" aria-required="true" required="">
                 </fieldset>
                 @error('name')
                     <span class="alert alert-danger text-center">{{ $brand->slug }}</span>

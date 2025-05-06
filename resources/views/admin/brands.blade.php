@@ -44,7 +44,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Slug</th>
                                 <th>Products</th>
@@ -54,8 +54,9 @@
                         <tbody>
                             @foreach($brands as $brand )
                             <tr>
-                                <td>{{ $brand->id }}</td>
-                                <td class="pname">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $brand->brand_id }}</td> {{-- Changed from $brand->id --}}
+                                <td>
                                     <div class="image">
                                         <img src="{{asset('uploads/brands')}}/{{$brand->image}}" alt="{{$brand->name}}" class="image">
                                     </div>
@@ -67,28 +68,28 @@
                                 <td><a href="#" target="_blank">1</a></td>
                                 <td>
                                     <div class="list-icon-function">
-                                        <a href="{{ route('admin.brands-edit', ['id'=> $brand->id])}}">
-                                           <div class="item edit">
-                                                <i class="icon-edit-3"></i>
-                                            </div>
-                                        </a>
-                                        <form action="{{ route('admin.brands-delete',['id'=> $brand->id])}}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <div class="item text-danger delete">
-                                                <i class="icon-trash-2"></i>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="divider"></div>
-                <div class="flex items-center justify-between flex-wrap gap10 wgp-pagination">
-                    {{$brands->links('pagination::bootstrap-5')}}
+                                        <a href="{{ route('admin.brands-edit', ['brand_id'=> $brand->brand_id])}}" {{-- Changed 'id' to 'brand_id' --}}
+                                            class="tf-button style-1 active">Edit</a>
+                                        </td>
+                                        <td>
+                                            <form action="{{ route('admin.brands-delete',['brand_id'=> $brand->brand_id])}}" method="POST"> {{-- Changed 'id' to 'brand_id' --}}
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="item text-danger delete">
+                                                    <i class="icon-trash-2"></i>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="flex items-center justify-between flex-wrap gap10 wgp-pagination">
+                        {{$brands->links('pagination::bootstrap-5')}}
+                    </div>
                 </div>
             </div>
         </div>

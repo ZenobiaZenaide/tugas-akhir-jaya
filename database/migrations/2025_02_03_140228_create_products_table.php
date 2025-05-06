@@ -30,7 +30,7 @@ return new class extends Migration
             $table->timestamps();
             //relation (foreign key constraints will still work with string IDs)
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->foreign('brand_id')->references('brand_id')->on('brands')->onDelete('cascade'); // Changed 'id' to 'brand_id'
         });
     }
 

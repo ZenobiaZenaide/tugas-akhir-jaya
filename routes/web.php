@@ -58,9 +58,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/admin/brands', [AdminController::class, 'brands'])->name('admin.brands');
     Route::get('/admin/brand/add', [AdminController::class, 'add_brand'])->name('admin.brands-add');
     Route::post('admin/brand/store', [AdminController::class, 'brand_store'])->name('admin.brands-store');
-    Route::get('/admin/brand/edit/{id}', [AdminController::class, 'brand_edit'])->name('admin.brands-edit');
-    Route::put('admin/brand/update', [AdminController::class, 'brand_update'])->name('admin.brands-update');
-    Route::delete('admin/brand/{id}/delete', [AdminController::class, 'brand_delete'])->name('admin.brands-delete');
+    Route::get('/admin/brand/edit/{brand_id}', [AdminController::class, 'brand_edit'])->name('admin.brands-edit'); // Changed {id} to {brand_id}
+    Route::put('admin/brand/update', [AdminController::class, 'brand_update'])->name('admin.brands-update'); // Ensure the form sends brand_id
+    Route::delete('admin/brand/{brand_id}/delete', [AdminController::class, 'brand_delete'])->name('admin.brands-delete'); // Changed {id} to {brand_id}
 
     //Categories
     Route::get('/admin/categories',[AdminController::class,'categories'])->name('admin.categories');

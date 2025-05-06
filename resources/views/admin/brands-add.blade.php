@@ -32,18 +32,13 @@
             <form class="form-new-product form-style-1" action="{{route('admin.brands-store')}}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
-                <fieldset class="name">
-                    <div class="body-title">Brand ID <span class="tf-color-1">*</span></div>
-                    <input class="flex-grow" type="text" placeholder="Brand ID" name="id"
-                        tabindex="0" value="{{ old('id')}}" aria-required="true" required="">
-                </fieldset>
-                @error('id')
-                    <span class="alert alert-danger text-center">{{ $message}}</span>
-                @enderror
-                <fieldset class="name">
-                    <div class="body-title">Brand Name <span class="tf-color-1">*</span></div>
-                    <input class="flex-grow" type="text" placeholder="Brand name" name="name"
-                        tabindex="0" value="{{ old('name')}}" aria-required="true" required="">
+                <div class="body-title">Brand ID <span class="tf-color-1">*</span></div>
+                <input class="flex-grow" type="text" placeholder="Brand ID" name="brand_id" {{-- Changed name from 'id' to 'brand_id' --}}
+                    tabindex="0" value="{{old('brand_id')}}" aria-required="true" required="">
+                @error('brand_id') <span class="text-danger">{{$message}}</span> @enderror
+                <div class="body-title">Brand Name <span class="tf-color-1">*</span></div>
+                <input class="flex-grow" type="text" placeholder="Brand name" name="name"
+                    tabindex="0" value="{{ old('name')}}" aria-required="true" required="">
                 </fieldset>
                 @error('name')
                     <span class="alert alert-danger text-center">{{ $message}}</span>

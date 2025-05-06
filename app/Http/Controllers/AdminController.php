@@ -77,7 +77,7 @@ class AdminController extends Controller
     }
 
     public function brands(){
-        $brands = Brand::orderBy('id','DESC')->paginate(5);
+        $brands = Brand::orderBy('brand_id','DESC')->paginate(5); // Changed from 'id'
         return view('admin.brands', compact('brands'));
     }
 
@@ -89,49 +89,48 @@ class AdminController extends Controller
 
     public function brand_store(request $request){
         $request->validate([
-            'id' => 'required',
+            'brand_id' => 'required|unique:brands,brand_id',
             'name' => 'required',
             'slug' => 'required|unique:brands,slug',
-            'image' => 'mimes:png,jpg,jpeg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
         $brand = new Brand();
-        $brand->id = $request->id;
+        $brand->brand_id = $request->brand_id; // Changed from 'id'
         $brand->name = $request->name;
         $brand->slug = Str::slug($request->name);
-        $image = $request->file('image');
-        $file_extension = $request->file('image')->extension();
-        $file_name = Carbon::now()->timestamp.'.'.$file_extension;
-        $this->GenerateBrandThumbnailsImage($image, $file_name);
-        $brand->image = $file_name;
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $file_name = Str::slug($request->name).'.'.$image->getClientOriginalExtension();
+            $this->GenerateBrandThumbnailsImage($image, $file_name);
+            $brand->image = $file_name;
+        }
         $brand->save();
         return redirect()->route('admin.brands')->with('status','Brand has been added succesfully!');
     }
 
-    public function brand_edit($id){
-        $brand = Brand::find($id);
+    public function brand_edit($brand_id){ // Changed parameter from $id
+        $brand = Brand::find($brand_id); // Changed from $id
         return view('admin.brands-edit', compact('brand'));
     }
 
     public function brand_update(Request $request){
         $request->validate([
+            // 'brand_id' => 'required|unique:brands,brand_id,'.$request->brand_id.',brand_id', // Assuming brand_id itself is not updatable or handled carefully
             'name' => 'required',
-            'slug' => 'required|unique:brands,slug',
-            'image' => 'mimes:png, jpg, jpeg|max:2048',
+            'slug' => 'required|unique:brands,slug,'.$request->brand_id.',brand_id', // Ensure slug uniqueness check uses brand_id
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-        $brand = Brand::find($request->id);
-        // $brand->id = $request->id;
+        $brand = Brand::find($request->brand_id); // Changed from $request->id
+        // $brand->brand_id = $request->brand_id; // Usually primary keys are not updated.
         $brand->name = $request->name;
         $brand->slug = Str::slug($request->name);
-        $brand->delete();
+        // $brand->delete(); // This seems incorrect here, perhaps you meant to delete the old image?
         if($request->hasFile('image')){
             if(File::exists(public_path('uploads/brands').'/'.$brand->image)){
                 File::delete(public_path('uploads/brands').'/'.$brand->image);
             }
             $image = $request->file('image');
-            $file_extension = $request->file('image')->extension();
-            $file_name = Carbon::now()->timestamp.'.'.$file_extension;
+            $file_name = Str::slug($request->name).'.'.$image->getClientOriginalExtension();
             $this->GenerateBrandThumbnailsImage($image, $file_name);
             $brand->image = $file_name;
         }
@@ -139,8 +138,8 @@ class AdminController extends Controller
         return redirect()->route('admin.brands')->with('status','Brand has been updated succesfully!');
     }
 
-    public function brand_delete($id){
-        $brand = Brand::find($id);
+    public function brand_delete($brand_id){ // Changed parameter from $id
+        $brand = Brand::find($brand_id); // Changed from $id
         if(File::exists(public_path('uploads/brands').'/'.$brand->image)){
             File::delete(public_path('uploads/brands').'/'.$brand->image);
         }
@@ -252,7 +251,7 @@ class AdminController extends Controller
 
     public function product_add(){
         $categories = Category::select('id','name')->orderBy('name')->get();
-        $brands = Brand::select('id','name')->orderBy('name')->get();
+        $brands = Brand::select('brand_id','name')->orderBy('name')->get(); // Changed from 'id'
         return view('admin.product-add',compact('categories','brands'));
     }
 
@@ -342,7 +341,7 @@ class AdminController extends Controller
     public function product_edit($id){
         $product = Product::find($id);
         $categories = Category::select('id','name')->orderBy('name')->get();
-        $brands = Brand::Select('id','name')->orderBy('name')->get();
+        $brands = Brand::Select('brand_id','name')->orderBy('name')->get(); // Changed from 'id'
         return view('admin.product-edit', compact('product', 'categories', 'brands'));
     }
 
