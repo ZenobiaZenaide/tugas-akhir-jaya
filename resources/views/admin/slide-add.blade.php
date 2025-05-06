@@ -33,8 +33,8 @@
                     @csrf
                     <fieldset class="name">
                         <div class="body-title">Slider ID <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Tagline" name="id" tabindex="0"
-                            value="{{old('id')}}" aria-required="true" required="">
+                        <input class="flex-grow" type="text" placeholder="Slider ID" name="slide_id" tabindex="0"
+                            value="{{old('slide_id')}}" aria-required="true" required="">
                     </fieldset>
                     <fieldset class="name">
                         <div class="body-title">Tagline <span class="tf-color-1">*</span></div>

@@ -551,7 +551,7 @@ class AdminController extends Controller
     //SLIDES
 
     public function slides(){
-        $slides = Slides::orderBy('id', 'DESC')->paginate(5);
+        $slides = Slides::orderBy('slide_id', 'DESC')->paginate(5); // Changed 'id' to 'slide_id'
         return view('admin.slides', compact('slides'));
     }
     
@@ -561,17 +561,16 @@ class AdminController extends Controller
 
     public function slide_store(Request $request){
         $request->validate([
-            'id' => 'required',
+            'slide_id' => 'required|unique:slides,slide_id',
             'tagline' => 'required',
             'title' => 'required',
             'subtitle' => 'required',
             'link' => 'required',
-            'status' => 'required',
-            'image' => 'required|mimes:png,jpg,jpeg|max:2048'
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status' => 'required|boolean',
         ]);
-
         $slide = new Slides();
-        $slide->id = $request->id;
+        $slide->slide_id = $request->slide_id; // Changed from $request->id (assuming form field is named slide_id)
         $slide->tagline = $request->tagline;
         $slide->title = $request->title;
         $slide->subtitle = $request->subtitle;
@@ -596,22 +595,23 @@ class AdminController extends Controller
         })->save($destinationPath.'/'.$imageName);
     }
 
-    public function slide_edit($id){
-        $slide = Slides::find($id);
+    public function slide_edit($slide_id){ // Changed parameter from $id
+        $slide = Slides::find($slide_id); // Changed from $id
         return view('admin.slide-edit',compact('slide'));
     }
 
     public function slide_update(Request $request){
         $request->validate([
+            // 'slide_id' => 'required|unique:slides,slide_id,'.$request->slide_id.',slide_id', // Primary key usually not updated
             'tagline' => 'required',
             'title' => 'required',
             'subtitle' => 'required',
             'link' => 'required',
-            'status' => 'required',
-            'image' => 'mimes:png,jpg,jpeg|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Allow null if image is not being updated
+            'status' => 'required|boolean',
         ]);
-
-        $slide = Slides::find($request->id);
+        $slide = Slides::find($request->slide_id); // Changed from $request->id (assuming hidden input name is slide_id)
+        // $slide->slide_id = $request->slide_id; // Usually primary keys are not updated.
         $slide->tagline = $request->tagline;
         $slide->title = $request->title;
         $slide->subtitle = $request->subtitle;
@@ -633,8 +633,8 @@ class AdminController extends Controller
         return redirect()->route('admin.slides')->with('status', 'Slide added succesfully!');
     }
 
-    public function slide_delete($id){
-        $slide = Slides::find($id);
+    public function slide_delete($slide_id){ // Changed parameter from $id
+        $slide = Slides::find($slide_id); // Changed from $id
         if(File::exists(public_path('uploads/slides').'/'.$slide->image)){
             File::delete(public_path('uploads/slides').'/'.$slide->image);
         }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->longText('options')->nullable();
             $table->boolean('rstatus')->default(false);
             $table->timestamps();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('product_id')->on('products')->onDelete('cascade'); // Changed 'id' to 'product_id'
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }

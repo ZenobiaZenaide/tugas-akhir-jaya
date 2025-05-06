@@ -32,12 +32,12 @@
                 <form class="form-new-product form-style-1" action="{{route('admin.slide-update')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="id" value="{{$slide->id}}" />
+                    <input type="hidden" name="slide_id" value="{{$slide->slide_id}}" />
                     <fieldset class="name">
                         <div class="body-title">Slider ID <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Slider ID" name="id" tabindex="0"
-                            value="{{$slide->id}}" aria-required="true" required="" disabled="true">
-                            @error('id') <span class="alert alert-danger text-center">{{$message}}</span>@enderror
+                        <input class="flex-grow" type="text" placeholder="Slider ID" name="slide_id" tabindex="0"
+                            value="{{$slide->slide_id}}" aria-required="true" required="" disabled="true">
+                            @error('slide_id') <span class="alert alert-danger text-center">{{$message}}</span>@enderror
                     </fieldset>
                     <fieldset class="name">
                         <div class="body-title">Tagline <span class="tf-color-1">*</span></div>

@@ -54,7 +54,7 @@
                     <tbody>
                         @foreach ($slides as $slide)
                         <tr>
-                            <td>{{$slide->id}}</td>
+                            <td>{{$slide->slide_id}}</td>
                             <td class="pname">
                                 <div class="image">
                                     <img src="{{asset('uploads/slides')}}//{{$slide->image}}" alt="" class="{{$slide->title}}">
@@ -66,12 +66,12 @@
                             <td>{{$slide->link}}</td>
                             <td>
                                 <div class="list-icon-function">
-                                    <a href="{{route('admin.slide-edit',['id'=> $slide->id])}}">
+                                    <a href="{{route('admin.slide-edit',['slide_id'=> $slide->slide_id])}}">
                                         <div class="item edit">
                                             <i class="icon-edit-3"></i>
                                         </div>
                                     </a>
-                                    <form action="{{route('admin.slide-delete',['id'=>$slide->id])}}"
+                                    <form action="{{route('admin.slide-delete',['slide_id'=>$slide->slide_id])}}"
                                         method="POST">
                                         @csrf
                                         @method('DELETE')

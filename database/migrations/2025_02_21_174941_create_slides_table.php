@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('slides', function (Blueprint $table) {
-            $table->string('id')->primary(); // Changed from uuid('id')
+            $table->string('slide_id')->primary(); // Changed from 'id'
             $table->string('tagline');
             $table->string('title');
             $table->string('subtitle');

@@ -15,7 +15,7 @@ class SlideSeeder extends Seeder
     {
         DB::table('slides')->insert([
             [
-                'id' => 'slide-001', // Manually provided string ID
+                'slide_id' => 'slide-001', // Changed from 'id'
                 'tagline' => 'New Arrivals',
                 'title' => 'Check Out Our Latest Collection',
                 'subtitle' => 'Fresh styles just for you!',
