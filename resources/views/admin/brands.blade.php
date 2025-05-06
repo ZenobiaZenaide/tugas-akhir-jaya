@@ -54,7 +54,7 @@
                         <tbody>
                             @foreach($brands as $brand )
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <!-- <td>{{ $loop->iteration }}</td> -->
                                 <td>{{ $brand->brand_id }}</td> {{-- Changed from $brand->id --}}
                                 <td>
                                     <div class="image">
