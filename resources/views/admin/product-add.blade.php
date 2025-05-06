@@ -70,10 +70,10 @@
                                     <div class="body-title mb-10">Category <span class="tf-color-1">*</span>
                                     </div>
                                     <div class="select">
-                                        <select class="" name="category_id">
-                                            <option value="" selected disabled>Choose category</option>
+                                        <select class="form-control" name="category_id">
+                                            <option value="">Select Category</option>
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                                <option value="{{ $category->category_id }}" {{ old('category_id') == $category->category_id ? 'selected' : '' }}>
                                                     {{ $category->name }}
                                                 </option>
                                             @endforeach

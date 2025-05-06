@@ -54,7 +54,7 @@
                         <tbody>
                             @foreach($categories as $category )
                             <tr>
-                                <td>{{ $category->id }}</td>
+                                <td>{{ $category->category_id }}</td>  {{-- Changed from $category->id --}}
                                 <td class="pname">
                                     <div class="image">
                                         <img src="{{asset('uploads/categories')}}/{{$category->image}}" alt="{{$category->name}}" class="image">
@@ -67,12 +67,12 @@
                                 <td><a href="#" target="_blank">1</a></td>
                                 <td>
                                     <div class="list-icon-function">
-                                        <a href="{{ route('admin.category-edit', ['id' => $category->id])}}">
+                                        <a href="{{ route('admin.category-edit', ['category_id' => $category->category_id])}}"> {{-- Changed 'id' to 'category_id' --}}
                                             <div class="item edit">
                                                 <i class="icon-edit-3"></i>
                                             </div>
                                         </a>
-                                        <form action="{{ route('admin.category-delete',['id'=> $category->id])}}" method="POST">
+                                        <form action="{{ route('admin.category-delete',['category_id'=> $category->category_id])}}" method="POST"> {{-- Changed 'id' to 'category_id' --}}
                                             @csrf
                                             @method('DELETE')
                                             <div class="item text-danger delete">

@@ -158,32 +158,39 @@ class AdminController extends Controller
 
     // CATEGORIES
 
-    public function categories() {
-        $categories = Category::orderBy("id","DESC")->paginate(10);
-        return view('admin.categories',compact('categories'));
+    public function categories()
+    {
+        $categories = Category::orderBy("category_id","DESC")->paginate(10); // Changed 'id' to 'category_id'
+        return view('admin.categories', ['categories' => $categories]);
     }
 
     public function category_add(){
         return view('admin.category-add');
     }
 
-    public function category_store(Request $request){
+    public function category_store(Request $request)
+    {
         $request->validate([
-            'id' => 'required',
+            'category_id' => 'required|unique:categories,category_id', // Changed 'id' to 'category_id' and updated the unique rule
             'name' => 'required',
             'slug' => 'required|unique:categories,slug',
             'image' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
 
         $category = new Category();
-        $category->id = $request->id;
+        $category->category_id = $request->category_id; // Changed from $request->id
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
-        $image = $request->file('image');
-        $file_extention = $request->file('image')->extension();
-        $file_name = Carbon::now()->timestamp.'.'.$file_extention;
-        $this->GenerateCategoryThumbnailsImage($image, $file_name);
-        $category->image = $file_name;
+        // It's good practice to check if a file is uploaded before trying to process it
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $file_extention = $image->extension(); // Corrected method call
+            $file_name = Carbon::now()->timestamp.'.'.$file_extention;
+            $this->GenerateCategoryThumbnailsImage($image, $file_name);
+            $category->image = $file_name;
+        } else {
+            $category->image = null; // Or a default image path
+        }
         $category->save();
 
         return redirect()->route('admin.categories')->with('status','Category has been added succesfully');
@@ -215,7 +222,7 @@ class AdminController extends Controller
     public function category_update(Request $request){
         $request->validate([
             'name' => 'required',
-            'slug' => 'required|unique:categories,slug,' . $request->id . ',id',
+            'slug' => 'required|unique:categories,slug,' . $request->id . ',category_id', // Changed 'id' to 'category_id' for the column name
             'image' => 'nullable|mimes:png,jpg,jpeg|max:2048',
         ]);
 
@@ -250,8 +257,8 @@ class AdminController extends Controller
     }
 
     public function product_add(){
-        $categories = Category::select('id','name')->orderBy('name')->get();
-        $brands = Brand::select('brand_id','name')->orderBy('name')->get(); // Changed from 'id'
+        $categories = Category::select('category_id','name')->orderBy('name')->get(); // Changed 'id' to 'category_id'
+        $brands = Brand::select('brand_id','name')->orderBy('name')->get(); 
         return view('admin.product-add',compact('categories','brands'));
     }
 
@@ -340,7 +347,7 @@ class AdminController extends Controller
 
     public function product_edit($product_id){ // Changed parameter from $id
         $product = Product::find($product_id); // Changed from $id
-        $categories = Category::select('id','name')->orderBy('name')->get();
+        $categories = Category::select('category_id','name')->orderBy('name')->get(); // Changed 'id' to 'category_id'
         $brands = Brand::Select('brand_id','name')->orderBy('name')->get(); // Changed from 'id'
         return view('admin.product-edit', compact('product', 'categories', 'brands'));
     }

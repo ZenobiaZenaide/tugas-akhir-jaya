@@ -16,7 +16,7 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
-                'id' => 'cat-001', // Manually provided string ID
+                'category_id' => 'cat-001', // Changed from 'id'
                 'name' => 'Electronics',
                 'slug' => Str::slug('Electronics'),
                 'image' => 'default-category.png', // Optional
@@ -25,7 +25,7 @@ class CategorySeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 'cat-002', // Manually provided string ID
+                'category_id' => 'cat-002', // Changed from 'id'
                 'name' => 'Mobile Phones',
                 'slug' => Str::slug('Mobile Phones'),
                 'image' => 'default-category.png', // Optional
