@@ -32,6 +32,14 @@
             <form class="form-new-product form-style-1" action="{{route('admin.category-store')}}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
+                <fieldset class="id">
+                    <div class="body-title">Category ID <span class="tf-color-1">*</span></div>
+                    <input class="flex-grow" type="text" placeholder="Category ID" name="id"
+                        tabindex="0" value="{{ old('id')}}" aria-required="true" required="">
+                </fieldset>
+                @error('id')
+                    <span class="alert alert-danger text-center">{{ $message}}</span>
+                @enderror
                 <fieldset class="name">
                     <div class="body-title">Category Name <span class="tf-color-1">*</span></div>
                     <input class="flex-grow" type="text" placeholder="Category name" name="name"

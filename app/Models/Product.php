@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids; // Add this import
 use App\Models\Brand;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories; // Consider adding HasFactory trait if needed
 
 class Product extends Model
 {
-    use HasUuids; // Add this trait
-    // use HasFactory; // Add if you use factories for Product
+    // Use string as primary key
+    protected $keyType = 'string';
+    // Not auto-incrementing
+    public $incrementing = false;
 
     public function category (){
         return $this->belongsTo(Category::class,'category_id');

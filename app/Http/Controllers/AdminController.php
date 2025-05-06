@@ -89,12 +89,14 @@ class AdminController extends Controller
 
     public function brand_store(request $request){
         $request->validate([
+            'id' => 'required',
             'name' => 'required',
             'slug' => 'required|unique:brands,slug',
             'image' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
 
         $brand = new Brand();
+        $brand->id = $request->id;
         $brand->name = $request->name;
         $brand->slug = Str::slug($request->name);
         $image = $request->file('image');
@@ -119,6 +121,7 @@ class AdminController extends Controller
         ]);
 
         $brand = Brand::find($request->id);
+        // $brand->id = $request->id;
         $brand->name = $request->name;
         $brand->slug = Str::slug($request->name);
         $brand->delete();
@@ -167,12 +170,14 @@ class AdminController extends Controller
 
     public function category_store(Request $request){
         $request->validate([
+            'id' => 'required',
             'name' => 'required',
-            'slug' => 'required|unique:category,slug',
+            'slug' => 'required|unique:categories,slug',
             'image' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
 
         $category = new Category();
+        $category->id = $request->id;
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
         $image = $request->file('image');
@@ -253,6 +258,7 @@ class AdminController extends Controller
 
     public function product_store(Request $request){
         $request->validate([
+            'id' => 'required',
             'name' => 'required',
             'slug' => 'required|unique:products,slug',
             'short_description' => 'required',
@@ -270,6 +276,7 @@ class AdminController extends Controller
         ]);
 
         $product = new Product();
+        $product->id = $request->id;
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
         $product->short_description = $request->short_description;
@@ -459,6 +466,7 @@ class AdminController extends Controller
 
     public function coupon_store(Request $request){
         $request->validate([
+            'id' => 'required',
             'code' => 'required',
             'type' => 'required',
             'value' => 'required|numeric',
@@ -467,6 +475,7 @@ class AdminController extends Controller
         ]);
 
         $coupon = new Coupon();
+        $coupon->id = $request->id;
         $coupon->code = $request->code;
         $coupon->type = $request->type;
         $coupon->value = $request->value;
@@ -572,6 +581,7 @@ class AdminController extends Controller
 
     public function slide_store(Request $request){
         $request->validate([
+            'id' => 'required',
             'tagline' => 'required',
             'title' => 'required',
             'subtitle' => 'required',
@@ -581,6 +591,7 @@ class AdminController extends Controller
         ]);
 
         $slide = new Slides();
+        $slide->id = $request->id;
         $slide->tagline = $request->tagline;
         $slide->title = $request->title;
         $slide->subtitle = $request->subtitle;

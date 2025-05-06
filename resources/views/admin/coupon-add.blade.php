@@ -31,6 +31,13 @@
                 <form class="form-new-product form-style-1" method="POST" action="{{route('admin.coupon-store')}}">
                     @csrf
                     <fieldset class="name">
+                        <div class="body-title">Coupon ID<span class="tf-color-1">*</span></div>
+                        <input class="flex-grow" type="text" placeholder="Coupon ID"
+                            name="id" tabindex="0" value="{{ old('id') }}" aria-required="true"
+                            required="">
+                    </fieldset>
+                    @error('id') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror
+                    <fieldset class="name">
                         <div class="body-title">Coupon Code<span class="tf-color-1">*</span></div>
                         <input class="flex-grow" type="text" placeholder="Coupon Code"
                             name="code" tabindex="0" value="{{ old('name') }}" aria-required="true"
@@ -49,7 +56,7 @@
                     </fieldset>
                     @error('value') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror
                     <fieldset class="name">
-                        <div class="body-title">Cart Value <span class="tf-color-1">*</span></div>
+                        <div class="body-title">Value <span class="tf-color-1">*</span></div>
                         <input class="flex-grow" type="text" placeholder="Value"
                             name="value" tabindex="0" value="{{ old('value') }}" aria-required="true"
                             required="">

@@ -33,6 +33,15 @@
                 @csrf
                 <div class="wg-box">
                     <fieldset class="name">
+                        <div class="body-title mb-10">Product ID <span class="tf-color-1">*</span>
+                        </div>
+                        <input class="mb-10" type="text" placeholder="Enter product ID" name="id" tabindex="0"
+                            value="{{ old('id') }}" aria-required="true" required="">
+                    </fieldset>
+                    @error('id')
+                        <span class="alert alert-danger text-center"> {{ $message }}
+                    @enderror
+                    <fieldset class="name">
                         <div class="body-title mb-10">Product name <span class="tf-color-1">*</span>
                         </div>
                         <input class="mb-10" type="text" placeholder="Enter product name" name="name" tabindex="0"
