@@ -16,25 +16,25 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'id' => 'admin-001', // Manually provided string ID
+                'user_id' => 'admin-001', // Changed from 'id' to 'user_id'
                 'name' => 'Test Admin',
                 'email' => 'dev@gmail.com',
                 'mobile' => '1234567890',
                 'email_verified_at' => now(),
                 'password' => Hash::make('dev'),
-                'utype' => 'ADM', // Or 'ADM' for admin
+                'utype' => 'ADM',
                 'remember_token' => \Illuminate\Support\Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 'user-001', // Manually provided string ID
+                'user_id' => 'user-001', // Changed from 'id' to 'user_id'
                 'name' => 'Test User',
                 'email' => 'user@gmail.com',
                 'mobile' => '1234567830',
                 'email_verified_at' => now(),
                 'password' => Hash::make('user'),
-                'utype' => 'USR', // Or 'ADM' for admin
+                'utype' => 'USR',
                 'remember_token' => \Illuminate\Support\Str::random(10),
                 'created_at' => now(),
                 'updated_at' => now(),

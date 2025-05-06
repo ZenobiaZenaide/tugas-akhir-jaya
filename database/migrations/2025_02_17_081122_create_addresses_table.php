@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->uuid('id')->primary(); // This table's ID remains uuid as it's not in the specified list
-            $table->string('user_id'); // Changed from uuid('user_id')
+            $table->string('user_id'); // This column definition is fine
             $table->string('name');
             $table->string('phone');
             $table->string('locality');
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('zip');
             $table->string('type')->default('home');
             $table->boolean('isdefault')->default(false);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade'); // Changed 'id' to 'user_id'
             $table->timestamps();
         });
     }

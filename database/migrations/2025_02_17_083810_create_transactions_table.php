@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id')->primary(); // This table's ID remains uuid
-            $table->string('user_id'); // Changed from uuid('user_id')
+            $table->string('user_id'); // This column definition is fine
             $table->uuid('order_id'); // Remains uuid, references orders.id
             $table->enum('mode', ['cod', 'card']);
             $table->enum('status', ['pending', 'approved', 'declined', 'refunded'])->default('pending');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade'); // Changed 'id' to 'user_id'
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
