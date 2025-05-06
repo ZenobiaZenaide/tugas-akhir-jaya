@@ -33,6 +33,11 @@
                     @method('PUT')
                     <input type="hidden" name="id" value="{{$coupon->id}}"/>
                     <fieldset class="name">
+                        <div class="body-title">Coupon ID<span class="tf-color-1">*</span></div>
+                        <input class="flex-grow" type="text" placeholder="Coupon ID" name="id"
+                            tabindex="0" value="{{ $coupon->id }} " aria-required="true" required="" disabled="true">
+                    </fieldset>
+                    <fieldset class="name">
                         <div class="body-title">Coupon Code <span class="tf-color-1">*</span></div>
                         <input class="flex-grow" type="text" placeholder="Coupon Code" name="code"
                             tabindex="0" value="{{ $coupon->code}} " aria-required="true" required="">

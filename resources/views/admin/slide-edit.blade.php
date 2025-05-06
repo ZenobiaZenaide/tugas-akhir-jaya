@@ -34,6 +34,12 @@
                     @method('PUT')
                     <input type="hidden" name="id" value="{{$slide->id}}" />
                     <fieldset class="name">
+                        <div class="body-title">Slider ID <span class="tf-color-1">*</span></div>
+                        <input class="flex-grow" type="text" placeholder="Slider ID" name="id" tabindex="0"
+                            value="{{$slide->id}}" aria-required="true" required="" disabled="true">
+                            @error('id') <span class="alert alert-danger text-center">{{$message}}</span>@enderror
+                    </fieldset>
+                    <fieldset class="name">
                         <div class="body-title">Tagline <span class="tf-color-1">*</span></div>
                         <input class="flex-grow" type="text" placeholder="Tagline" name="tagline"tabindex="0"
                             value="{{$slide->tagline}}" aria-required="true" required="">
