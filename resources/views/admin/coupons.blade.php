@@ -44,7 +44,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>ID</th>
                                 <th>Code</th>
                                 <th>Type</th>
                                 <th>Value</th>
@@ -56,20 +56,20 @@
                         <tbody>
                             @foreach ($coupons as $coupon)
                             <tr>
-                                <td>{{ $coupon->id }}</td>
-                                <td>{{ $coupon->code}}</td>
+                                <td>{{ $coupon->coupon_id }}</td> {{-- Changed from $coupon->id --}}
+                                <td>{{ $coupon->code }}</td>
                                 <td>{{ $coupon->type }}</td>
                                 <td>{{ $coupon->value }}</td>
                                 <td>{{ $coupon->cart_value }}</td>
                                 <td>{{ $coupon->expiry_date }}</td>
                                 <td>
                                     <div class="list-icon-function">
-                                        <a href="{{ route('admin.coupon-edit',['id' => $coupon->id])}}">
+                                        <a href="{{ route('admin.coupon-edit',['coupon_id' => $coupon->coupon_id])}}" {{-- Changed 'id' to 'coupon_id' --}}
                                             <div class="item edit">
                                                 <i class="icon-edit-3"></i>
                                             </div>
                                         </a>
-                                        <form action="{{ route('admin.coupon-delete', ['id' => $coupon->id])}}" method="POST">
+                                        <form action="{{ route('admin.coupon-delete', ['coupon_id' => $coupon->coupon_id])}}" method="POST"> {{-- Changed 'id' to 'coupon_id' --}}
                                             @csrf
                                             @method('DELETE')
                                             <div class="item text-danger delete">

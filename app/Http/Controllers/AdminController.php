@@ -474,7 +474,7 @@ class AdminController extends Controller
         ]);
 
         $coupon = new Coupon();
-        $coupon->id = $request->id;
+        $coupon->coupon_id = $request->coupon_id; // Changed from $request->id
         $coupon->code = $request->code;
         $coupon->type = $request->type;
         $coupon->value = $request->value;
@@ -488,9 +488,8 @@ class AdminController extends Controller
         return view('admin.coupon-add');
     }
 
-    public function coupon_edit($id){
-        
-        $coupon = Coupon::find($id);
+    public function coupon_edit($coupon_id){ // Changed parameter from $id
+        $coupon = Coupon::find($coupon_id); // Changed from $id
         return view('admin.coupon-edit', compact('coupon'));
     }
 
@@ -505,7 +504,7 @@ class AdminController extends Controller
         ]);
     
         // Find the coupon to be updated
-        $coupon = Coupon::find($request->id);
+        $coupon = Coupon::find($request->coupon_id); // Changed from $request->id
     
         // Check if the code has been changed and is not unique
         // If the code has been changed, check for duplicates
@@ -526,8 +525,8 @@ class AdminController extends Controller
         return redirect()->route('admin.coupons')->with('status', 'Coupon has been updated successfully!');
     }
     
-    public function coupon_delete($id){
-        $coupon = Coupon::find($id);
+    public function coupon_delete($coupon_id){ // Changed parameter from $id
+        $coupon = Coupon::find($coupon_id); // Changed from $id
         $coupon->delete();
         return redirect()->route('admin.coupons')->with('status','Coupon has been deleted Successfully');
     }

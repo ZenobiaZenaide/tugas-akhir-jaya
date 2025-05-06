@@ -28,14 +28,14 @@
                 </ul>
             </div>
             <div class="wg-box">
-                <form class="form-new-product form-style-1" method="POST" action="{{route('admin.coupon-update')}}">
+                <form class="form-new-product form-style-1" action="{{route('admin.coupon-update')}}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="id" value="{{$coupon->id}}"/>
-                    <fieldset class="name">
-                        <div class="body-title">Coupon ID<span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Coupon ID" name="id"
-                            tabindex="0" value="{{ $coupon->id }} " aria-required="true" required="" disabled="true">
+                    <input type="hidden" name="coupon_id" value="{{$coupon->coupon_id}}"/> {{-- Changed name from 'id' and value from $coupon->id --}}
+                    <div class="body-title">Coupon ID <span class="tf-color-1">*</span></div>
+                    <input class="flex-grow" type="text" placeholder="Coupon ID" name="coupon_id_display" {{-- Name for display, actual ID is in hidden input --}}
+                        tabindex="0" value="{{ $coupon->coupon_id }} " aria-required="true" required="" disabled="true"> {{-- Changed value from $coupon->id --}}
                     </fieldset>
                     <fieldset class="name">
                         <div class="body-title">Coupon Code <span class="tf-color-1">*</span></div>

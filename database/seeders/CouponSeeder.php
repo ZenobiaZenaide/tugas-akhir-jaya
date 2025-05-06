@@ -15,8 +15,8 @@ class CouponSeeder extends Seeder
     {
         DB::table('coupons')->insert([
             [
-                'id' => 'coupon-001', // Manually provided string ID
-                'code' => 'SAVE10',
+                'coupon_id' => 'coupon-001', // Changed from 'id'
+                'code' => 'SUMMER20',
                 'type' => 'percent', // 'fixed' or 'percent'
                 'value' => 10, // Percentage or fixed amount
                 'cart_value' => 50, // Minimum cart value to apply coupon

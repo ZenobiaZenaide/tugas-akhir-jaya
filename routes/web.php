@@ -82,9 +82,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/admin/coupons',[AdminController::class, 'coupons'])->name('admin.coupons');
     Route::get('/admin/coupons/add',[AdminController::class, 'coupon_add'])->name('admin.coupons-add');
     Route::post('/admin/coupon/store', [AdminController::class, 'coupon_store'])->name('admin.coupon-store');
-    Route::get('/admin/coupon/{id}/edit', [AdminController::class, 'coupon_edit'])->name('admin.coupon-edit');
+    Route::get('/admin/coupon/edit/{coupon_id}', [AdminController::class, 'coupon_edit'])->name('admin.coupon-edit');
+    Route::delete('/admin/coupon/{coupon_id}/delete', [AdminController::class, 'coupon_delete'])->name('admin.coupon-delete');
     Route::put('/admin/coupon/update', [AdminController::class, 'coupon_update'])->name('admin.coupon-update');
-    Route::delete('/admin/coupon/{id}/delete', [AdminController::class, 'coupon_delete'])->name('admin.coupon-delete');
+    // Route::delete('/admin/coupon/{id}/delete', [AdminController::class, 'coupon_delete'])->name('admin.coupon-delete'); // Remove this duplicate line
     Route::post('/cart/apply-coupon', [CartController::class, 'apply_coupon_code'])->name('cart.coupon-apply');
     Route::delete('/cart/remove-coupon', [CartController::class, 'remove_coupon_code'])->name('cart.coupon-remove');
     //Order

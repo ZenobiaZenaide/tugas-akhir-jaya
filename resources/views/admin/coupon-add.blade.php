@@ -31,10 +31,10 @@
                 <form class="form-new-product form-style-1" method="POST" action="{{route('admin.coupon-store')}}">
                     @csrf
                     <fieldset class="name">
-                        <div class="body-title">Coupon ID<span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Coupon ID"
-                            name="id" tabindex="0" value="{{ old('id') }}" aria-required="true"
-                            required="">
+                        <div class="body-title">Coupon ID <span class="tf-color-1">*</span></div>
+                        <input class="flex-grow" type="text" placeholder="Coupon ID" name="coupon_id" {{-- Ensure name is 'coupon_id' --}}
+                            tabindex="0" value="{{old('coupon_id')}}" aria-required="true" required="">
+                        @error('coupon_id') <span class="text-danger">{{$message}}</span> @enderror
                     </fieldset>
                     @error('id') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror
                     <fieldset class="name">

@@ -61,6 +61,7 @@ class CartController extends Controller
 
        
         $coupon_code = $request->coupon_code;
+
     
         if (isset($coupon_code)) {
             // Get cart subtotal and clean it
@@ -72,9 +73,11 @@ class CartController extends Controller
                 ->where('expiry_date', '>=', Carbon::today())
                 ->where('cart_value', '<=', $cleanSubtotal)
                 ->first();
-    
+            
+            // dd($coupon_code);
+
             if (!$coupon) {
-                return redirect()->back()->with('error', 'Invalid coupon code!');
+                return redirect()->back()->with('error', 'Invalid coupon code: Coupon not found!');
             } else {
                 Session::put('coupon', [
                     'code' => $coupon->code,
@@ -145,7 +148,7 @@ class CartController extends Controller
     }
 
     public function place_an_order(Request $request){
-        $user_id = Auth::user()->id;
+        $user_id = Auth::user()->user_id;
         $address = Address::where('user_id', $user_id)->where('isdefault', true)->first();
 
         if(!$address){
@@ -202,7 +205,7 @@ class CartController extends Controller
             // dd($item);
             $orderItem = new OrderItem();
             $orderItem->product_id = $item->id;
-            $orderItem->orders_id = $order->id;
+            $orderItem->order_id = $order->id; // Corrected from orders_id
             $orderItem->price = $item->price;
             $orderItem->quantity = $item->qty;
             // dd($orderItem);
@@ -215,7 +218,7 @@ class CartController extends Controller
         elseif($request->mode == "cod"){
             $transaction = new Transaction();
             $transaction->user_id = $user_id;
-            $transaction->orders_id = $order->id;
+            $transaction->order_id = $order->id; // Corrected from orders_id
             $transaction->mode = $request->mode;
             $transaction->status = "pending";
             $transaction->save();
