@@ -548,7 +548,7 @@ class AdminController extends Controller
         $order->save();
 
         if($request->order_status == 'delivered'){
-            $transaction = Transaction::where('orders_id', $request->orders_id)->first();
+            $transaction = Transaction::where('order_id', $request->orders_id)->first(); // Changed 'orders_id' to 'order_id'
             $transaction->status = 'approved';
             $transaction->save();
         }
