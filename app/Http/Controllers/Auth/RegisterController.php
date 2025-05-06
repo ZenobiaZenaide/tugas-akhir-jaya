@@ -52,7 +52,7 @@ class RegisterController extends Controller
             'user_id' => ['required','string','max:255'], // Add 'id' validation rule here
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'mobile' => ['required','digits:10','unique:users'],
+            'mobile' => ['required','digits:12','unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }

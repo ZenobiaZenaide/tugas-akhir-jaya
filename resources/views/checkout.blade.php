@@ -84,7 +84,7 @@
                                     <div class="form-floating my-3">
                                         <input type="text" class="form-control" name="zip" required=""
                                             value="{{ old('zip') }}">
-                                        <label for="zip">Pincode *</label>
+                                        <label for="zip">Zip Code *</label>
                                         @error('zip')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
