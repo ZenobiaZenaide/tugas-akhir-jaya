@@ -165,7 +165,7 @@
                         @else
                             <form method="POST" action="{{ route('wishlist.add-item') }}" id="wishlist-form">
                                 @csrf
-                                <input type="hidden" name="id" value="{{ $product->id }}" onclick />
+                                <input type="hidden" name="id" value="{{ $product->product_id }}" onclick />
                                 <input type="hidden" name="quantity" value="1" />
                                 <input type="hidden" name="name" value="{{ $product->name }}" />
                                 <input type="hidden" name="price"

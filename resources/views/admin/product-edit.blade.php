@@ -39,7 +39,7 @@
                         <div class="body-title mb-10">Product ID<span class="tf-color-1">*</span>
                         </div>
                         <input class="mb-10" type="text" placeholder="Enter product ID" name="id" tabindex="0"
-                            value="{{ $product->id }}" aria-required="true" required="" disabled="true">
+                            value="{{ $product->product_id }}" aria-required="true" required="" disabled="true">
                     </fieldset>
                     <fieldset class="name">
                         <div class="body-title mb-10">Product name <span class="tf-color-1">*</span>

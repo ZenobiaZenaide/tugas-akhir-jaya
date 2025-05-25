@@ -270,7 +270,7 @@
                                             @csrf
                                             <form name="addtocart-form" method="post" action="{{ route('cart.add') }}">
                                                 @csrf
-                                                <input type="hidden" name="id" value="{{ $product->id }}" />
+                                                <input type="hidden" name="id" value="{{ $product->product_id }}" />
                                                 <input type="hidden" name="quantity" value="1" />
                                                 <input type="hidden" name="name" value="{{ $product->name }}" />
                                                 <input type="hidden" name="price" value="{{ $product->sale_price == '' ? $product->regular_price : $product->sale_price }}" />
