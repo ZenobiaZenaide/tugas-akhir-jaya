@@ -8,22 +8,22 @@
                 <a href="{{ route('cart.index') }}" class="checkout-steps__item active">
                     <span class="checkout-steps__item-number">01</span>
                     <span class="checkout-steps__item-title">
-                        <span>Shopping Bag</span>
-                        <em>Manage Your Items List</em>
+                        <span>KERANJANG KAMU</span>
+                        <em>Barang yang ingin kamu beli</em>
                     </span>
                 </a>
                 <a href="javascript:void(0)" class="checkout-steps__item active">
                     <span class="checkout-steps__item-number">02</span>
                     <span class="checkout-steps__item-title">
-                        <span>Shipping and Checkout</span>
-                        <em>Checkout Your Items List</em>
+                        <span>Detail Shipping</span>
+                        <em>Isi dan cek detail pengiriman</em>
                     </span>
                 </a>
                 <a href="avascript:void(0)" class="checkout-steps__item">
                     <span class="checkout-steps__item-number">03</span>
                     <span class="checkout-steps__item-title">
-                        <span>Confirmation</span>
-                        <em>Review And Submit Your Order</em>
+                        <span>Konfirmasi</span>
+                        <em>Review dan konfirmasi pesanan kamu</em>
                     </span>
                 </a>
             </div>
@@ -152,7 +152,7 @@
                     <div class="checkout__totals-wrapper">
                         <div class="sticky-content">
                             <div class="checkout__totals">
-                                <h3>Your Order</h3>
+                                <h3>Pesanan Kamu</h3>
                                 <table class="checkout-cart-items">
                                     <thead>
                                         <tr>
@@ -211,15 +211,11 @@
                                 <div class="form-check">
                                     <input class="form-check-input form-check-input_fill" type="radio" name="mode" id="mode2" value="cod">
                                     <label class="form-check-label" for="mode2">
-                                        Cash on delivery
+                                        Cash on Delivery
                                     </label>
                                 </div>
                                 <div class="policy-text">
-                                    Your personal data will be used to process your order, support your experience
-                                    throughout this
-                                    website, and for other purposes described in our <a href="terms.html"
-                                        target="_blank">privacy
-                                        policy</a>.
+                                    Semua data kamu yang telah kamu isi, dari akn hingga ke alamat bersifat konfidental dan tidak akan disebarluaskan.</a>.
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary btn-checkout">PLACE ORDER</button>

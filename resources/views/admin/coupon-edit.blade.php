@@ -32,10 +32,10 @@
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="coupon_id" value="{{$coupon->coupon_id}}"/> {{-- Changed name from 'id' and value from $coupon->id --}}
+                    <input type="hidden" name="coupon_id" value="{{$coupon->coupon_id}}"/>
                     <div class="body-title">Coupon ID <span class="tf-color-1">*</span></div>
-                    <input class="flex-grow" type="text" placeholder="Coupon ID" name="coupon_id_display" {{-- Name for display, actual ID is in hidden input --}}
-                        tabindex="0" value="{{ $coupon->coupon_id }} " aria-required="true" required="" disabled="true"> {{-- Changed value from $coupon->id --}}
+                    <input class="flex-grow" type="text" placeholder="Coupon ID" name="coupon_id_display" 
+                        tabindex="0" value="{{ $coupon->coupon_id }} " aria-required="true" required="" disabled="true">
                     </fieldset>
                     <fieldset class="name">
                         <div class="body-title">Coupon Code <span class="tf-color-1">*</span></div>
@@ -82,6 +82,6 @@
                 </form>
             </div>
         </div>
-    </div>- The whole future lies in uncertainty: live immediately. - Seneca -->
+    </div>
 </div>
 @endsection

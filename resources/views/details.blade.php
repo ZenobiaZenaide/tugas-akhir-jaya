@@ -74,70 +74,30 @@
                 </div>
                 <div class="col-lg-5">
                     <div class="d-flex justify-content-between mb-4 pb-md-2">
-                        {{-- <div class="breadcrumb mb-0 d-none d-md-block flex-grow-1">
-                            <a href="#" class="menu-link menu-link_us-s text-uppercase fw-medium">Home</a>
-                            <span class="breadcrumb-separator menu-link fw-medium ps-1 pe-1">/</span>
-                            <a href="#" class="menu-link menu-link_us-s text-uppercase fw-medium">The Shop</a>
-                        </div> --}}
-
-                        {{-- <div
-                            class="product-single__prev-next d-flex align-items-center justify-content-between justify-content-md-end flex-grow-1">
-                            <a href="#" class="text-uppercase fw-medium"><svg width="10" height="10"
-                                    viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg">
-                                    <use href="#icon_prev_md" />
-                                </svg><span class="menu-link menu-link_us-s">Prev</span></a>
-                            <a href="#" class="text-uppercase fw-medium"><span
-                                    class="menu-link menu-link_us-s">Next</span><svg width="10" height="10"
-                                    viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg">
-                                    <use href="#icon_next_md" />
-                                </svg></a>
-                        </div> --}}
                     </div>
                     <h1 class="product-single__name">{{ $product->name }}</h1>
-                    {{-- <div class="product-single__rating">
-                        <div class="reviews-group d-flex">
-                            <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                <use href="#icon_star" />
-                            </svg>
-                            <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                <use href="#icon_star" />
-                            </svg>
-                            <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                <use href="#icon_star" />
-                            </svg>
-                            <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                <use href="#icon_star" />
-                            </svg>
-                            <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                <use href="#icon_star" />
-                            </svg>
-                        </div>
-                        <span class="reviews-note text-lowercase text-secondary ms-1">8k+ reviews</span>
-                    </div> --}}
                     <div class="product-single__price">
                         <span class="current-price">
                             @if ($product->sale_price)
-                                <s>${{ $product->regular_price }} </s> ${{ $product->sale_price }}
+                                <s>Rp.{{ $product->regular_price }}    </s>   Rp.{{ $product->sale_price }}
                             @else
-                                ${{ $product->regular_price }}
+                                Rp. {{ $product->regular_price }}
                             @endif
                         </span>
                     </div>
                     <div clas="product-single__short-desc">
                         <p>{{ $product->short_description }}</p>
                     </div>
-                    @if (Cart::instance('cart')->content()->where('id', $product->product_id)->count() > 0) {{-- Changed $product->id --}}
+                    <div clas="product-single__short-desc">
+                        <p>{{ $product->description }}</p>
+                    </div>
+                    @if (Cart::instance('cart')->content()->where('id', $product->product_id)->count() > 0)
                         <a href="{{ route('cart.index') }}" class="btn btn-warning mb-3">Go to Cart</a>
                     @else
                         <form name="addtocart-form" method="post" action="{{ route('cart.add') }}">
                             @csrf
                             <div class="product-single__addtocart">
-                                {{-- <div class="qty-control position-relative">
-                <input type="number" name="quantity" value="1" min="1" class="qty-control__number text-center">
-                <div class="qty-control__reduce">-</div>
-                <div class="qty-control__increase">+</div>
-              </div> --}}
-                                <input type="hidden" name="id" value="{{ $product->product_id }}" /> {{-- Changed $product->id --}}
+                                <input type="hidden" name="id" value="{{ $product->product_id }}" /> 
                                 <input type="hidden" name="quantity" value="1" />
                                 <input type="hidden" name="name" value="{{ $product->name }}" />
                                 <input type="hidden" name="price"
@@ -149,9 +109,9 @@
                         </form>
                     @endif
                     <div class="product-single__addtolinks">
-                        @if (Cart::instance('wishlist')->content()->where('id', $product->product_id)->count() > 0) {{-- Changed $product->id --}}
+                        @if (Cart::instance('wishlist')->content()->where('id', $product->product_id)->count() > 0) 
                             <form method="POST"
-                                action="{{ route('wishlist.item-remove', ['rowId' => Cart::instance('wishlist')->content()->where('id', $product->product_id)->first()->rowId]) }}" {{-- Changed $product->id --}}
+                                action="{{ route('wishlist.item-remove', ['rowId' => Cart::instance('wishlist')->content()->where('id', $product->product_id)->first()->rowId]) }}" 
                                 id="frm-remove-item">
                                 @csrf
                                 @method('DELETE')
@@ -178,6 +138,7 @@
                                     </svg><span>Add to Wishlist</span></a>
                             </form>
                         @endif
+                        
 
 
 
@@ -228,16 +189,12 @@
                             <label>Categories:</label>
                             <span>{{ $product->category->pluck('name')->implode(', ') }}</span>
                         </div>
-                        {{-- <div class="meta-item">
-                            <label>Tags:</label>
-                            <span>biker, black, bomber, leather</span>
-                        </div> --}}
                     </div>
                 </div>
-            </div> --}}
+            </div> 
         </section>
         <section class="products-carousel container" style="padding-top: 32px;">
-            <h2 class="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4">Related <strong>Products</strong></h2>
+            <h2 class="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4">OTHER <strong>Products</strong></h2>
 
             <div id="related_products" class="position-relative">
                 <div class="swiper-container js-swiper-slider"
@@ -312,9 +269,9 @@
                                     <div class="product-card__price d-flex">
                                         <span class="money price">
                                             @if ($product->sale_price)
-                                                <s>${{ $product->regular_price }} </s> ${{ $rproduct->sale_price }}
+                                                <s>Rp.{{ $product->regular_price }} </s> Rp.{{ $rproduct->sale_price }}
                                             @else
-                                                ${{ $product->regular_price }}
+                                                Rp.{{ $product->regular_price }}
                                             @endif
                                         </span>
                                     </div>
@@ -330,26 +287,25 @@
                                 </div>
                             </div>
                         @endforeach
-                    </div><!-- /.swiper-wrapper -->
-                </div><!-- /.swiper-container js-swiper-slider -->
+                    </div>
+                </div>
 
                 <div
                     class="products-carousel__prev position-absolute top-50 d-flex align-items-center justify-content-center">
                     <svg width="25" height="25" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg">
                         <use href="#icon_prev_md" />
                     </svg>
-                </div><!-- /.products-carousel__prev -->
+                </div>
                 <div
                     class="products-carousel__next position-absolute top-50 d-flex align-items-center justify-content-center">
                     <svg width="25" height="25" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg">
                         <use href="#icon_next_md" />
                     </svg>
-                </div><!-- /.products-carousel__next -->
+                </div>
 
                 <div class="products-pagination mt-4 mb-5 d-flex align-items-center justify-content-center"></div>
-                <!-- /.products-pagination -->
-            </div><!-- /.position-relative -->
+            </div>
 
-        </section><!-- /.products-carousel container -->
+        </section>
     </main>
 @endsection

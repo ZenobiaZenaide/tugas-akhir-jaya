@@ -9,14 +9,8 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids; // Import HasUuids
 class OrderItem extends Model
 {
     use HasFactory;
-    use HasUuids; // Add this trait to enable UUIDs for the primary key
+    use HasUuids; 
 
-    // Laravel 9+ automatically sets $incrementing to false and $keyType to 'string' 
-    // when using HasUuids for the default 'id' primary key.
-    // For older Laravel versions, or if your primary key is not named 'id',
-    // you might need to explicitly set these:
-    // public $incrementing = false;
-    // protected $keyType = 'string';
 
     protected $fillable = [
         'product_id', 
@@ -25,7 +19,6 @@ class OrderItem extends Model
         'quantity',
         'options',
         'rstatus'
-        // 'id' is typically not mass assignable as it's a primary key
     ];
 
     public function product(){
@@ -33,6 +26,6 @@ class OrderItem extends Model
     }
 
     public function order(){
-        return $this->belongsTo(Orders::class, 'order_id'); // Assumes Orders.id is the primary key it references
+        return $this->belongsTo(Orders::class, 'order_id'); 
     }
 }

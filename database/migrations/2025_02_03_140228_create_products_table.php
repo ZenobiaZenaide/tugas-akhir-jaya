@@ -28,10 +28,8 @@ return new class extends Migration
             $table->string('category_id')->nullable();
             $table->string('brand_id')->nullable();
             $table->timestamps();
-            //relation (foreign key constraints will still work with string IDs)
             $table->foreign('category_id')->references('category_id')->on('categories')->onDelete('cascade'); // Changed 'id' to 'category_id'
             $table->foreign('brand_id')->references('brand_id')->on('brands')->onDelete('cascade');
-            // No change needed for foreign keys in other tables referencing products.id yet, but we'll check order_items
         });
     }
 

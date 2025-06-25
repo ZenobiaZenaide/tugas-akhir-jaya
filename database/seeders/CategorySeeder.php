@@ -16,24 +16,23 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
-                'category_id' => 'cat-001', // Changed from 'id'
+                'category_id' => 'cat-001', 
                 'name' => 'Electronics',
                 'slug' => Str::slug('Electronics'),
-                'image' => 'default-category.png', // Optional
-                'parent_id' => null, // Or provide a parent category ID if it's a subcategory
+                'image' => 'default-category.png', 
+                'parent_id' => null, 
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'category_id' => 'cat-002', // Changed from 'id'
+                'category_id' => 'cat-002', 
                 'name' => 'Mobile Phones',
                 'slug' => Str::slug('Mobile Phones'),
-                'image' => 'default-category.png', // Optional
-                'parent_id' => 'cat-001', // Example of a subcategory
+                'image' => 'default-category.png', 
+                'parent_id' => 'cat-001', 
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // Add more categories as needed
         ]);
     }
 }

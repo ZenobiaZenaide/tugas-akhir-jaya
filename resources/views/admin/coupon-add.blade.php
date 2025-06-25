@@ -32,18 +32,20 @@
                     @csrf
                     <fieldset class="name">
                         <div class="body-title">Coupon ID <span class="tf-color-1">*</span></div>
-                        <input class="flex-grow" type="text" placeholder="Coupon ID" name="coupon_id" {{-- Ensure name is 'coupon_id' --}}
+                        <input class="flex-grow" type="text" placeholder="Coupon ID" name="coupon_id" 
                             tabindex="0" value="{{old('coupon_id')}}" aria-required="true" required="">
                         @error('coupon_id') <span class="text-danger">{{$message}}</span> @enderror
                     </fieldset>
-                    @error('id') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror
+
+                    {{-- @error('id') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror --}}
                     <fieldset class="name">
                         <div class="body-title">Coupon Code<span class="tf-color-1">*</span></div>
                         <input class="flex-grow" type="text" placeholder="Coupon Code"
                             name="code" tabindex="0" value="{{ old('name') }}" aria-required="true"
                             required="">
+                            @error('code') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror
                     </fieldset>
-                    @error('code') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror
+
                     <fieldset class="category">
                         <div class="body-title">Coupon Type</div>
                         <div class="select flex-grow">
@@ -53,22 +55,25 @@
                                 <option value="percent">Percent</option>
                             </select>
                         </div>
+                        @error('type') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror
                     </fieldset>
-                    @error('value') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror
+
                     <fieldset class="name">
                         <div class="body-title">Value <span class="tf-color-1">*</span></div>
                         <input class="flex-grow" type="text" placeholder="Value"
                             name="value" tabindex="0" value="{{ old('value') }}" aria-required="true"
                             required="">
+                            @error('value') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror
                     </fieldset>
-                    @error('cart_value') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror
+
                         <fieldset class="name">
                             <div class="body-title">Cart Value <span class="tf-color-1">*</span></div>
                             <input class="flex-grow" type="text" placeholder="Cart Value"
                                 name="cart_value" tabindex="0" value="{{ old('cart_value') }}" aria-required="true"
                                 required="">
+                                @error('cart_value') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror
                         </fieldset>
-                    @error('expiry_date') <spsan class="alert alert-danger text-center">{{$message}}</span> @enderror
+
                         <fieldset class="name">
                             <div class="body-title">Expiry Date <span class="tf-color-1">*</span></div>
                             <input class="flex-grow" type="date" placeholder="Expiry Date"
@@ -83,7 +88,7 @@
                 </form>
             </div>
         </div>
-    </div>- The whole future lies in uncertainty: live immediately. - Seneca -->
+    </div>
 </div>
 
 @endsection

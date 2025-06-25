@@ -4,7 +4,7 @@
 <div class="main-content-inner">
 
     <div class="main-content-wrap">
-        <div class="tf-section-2 mb-30">
+        <div class="tf-section-1 mb-30">
             <div class="flex gap20 flex-wrap-mobile">
                 <div class="w-half">
                     <div class="wg-chart-default mb-20">
@@ -68,7 +68,6 @@
                 </div>
 
                 <div class="w-half">
-
                     <div class="wg-chart-default mb-20">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap14">
@@ -77,7 +76,7 @@
                                 </div>
                                 <div>
                                     <div class="body-text mb-2">Total Orders Amount</div>
-                                    <h4>{{$TotalAmount}}</h4>
+                                    <h4>Rp.{{number_format($TotalAmount)}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -92,7 +91,7 @@
                                 </div>
                                 <div>
                                     <div class="body-text mb-2">Canceled Orders</div>
-                                    <h4>{{$TotalCanceledAmount}}</h4>
+                                    <h4>Rp.{{number_format($TotalCanceledAmount)}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +106,7 @@
                                 </div>
                                 <div>
                                     <div class="body-text mb-2">Total Delivered Amount</div>
-                                    <h4>{{$TotalDeliveredAmount}}</h4>
+                                    <h4>Rp.{{number_format($TotalDeliveredAmount)}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -122,7 +121,7 @@
                                 </div>
                                 <div>
                                     <div class="body-text mb-2">Total Ordered Amount</div>
-                                    <h4>{{$TotalOrderAmount}}</h4>
+                                    <h4>Rp.{{number_format($TotalOrderAmount)}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -131,67 +130,6 @@
                 </div>
 
             </div>
-
-            <div class="wg-box">
-                <div class="flex items-center justify-between">
-                    <h5>Monthly Revenue</h5>
-                    <div class="dropdown default">
-                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <span class="icon-more"><i class="icon-more-horizontal"></i></span>
-                        </button>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap40">
-                    <div>
-                        <div class="mb-2">
-                            <div class="block-legend">
-                                <div class="dot t1"></div>
-                                <div class="text-tiny">Total</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap10">
-                            <h4>tes</h4>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="mb-2">
-                            <div class="block-legend">
-                                <div class="dot t2"></div>
-                                <div class="text-tiny">Pending</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap10">
-                            <h4>tes</h4>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="mb-2">
-                            <div class="block-legend">
-                                <div class="dot t2"></div>
-                                <div class="text-tiny">Delivered</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap10">
-                            <h4>tes</h4>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="mb-2">
-                            <div class="block-legend">
-                                <div class="dot t2"></div>
-                                <div class="text-tiny">Canceled</div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap10">
-                            <h4>tes</h4>
-                        </div>
-                    </div>
-                </div>
-                <div id="line-chart-8"></div>
-            </div>
-
         </div>
         <div class="tf-section mb-30">
 
@@ -209,16 +147,11 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th style="width: 80px">OrderNo</th>
+                                    <th style="text-center">OrderNo</th>
                                     <th>Name</th>
                                     <th class="text-center">Phone</th>
                                     <th class="text-center">Subtotal</th>
-
                                     <th class="text-center">Status</th>
-                                    <th class="text-center">Order Date</th>
-                                    <th class="text-center">Items</th>
-                                    <th class="text-center">Delivered On</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -227,26 +160,15 @@
                                         <td class="text-center">{{ $order->id }}</td>
                                         <td class="text-center">{{ $order->name }}</td>
                                         <td class="text-center">{{ $order->phone }}</td>
-                                        <td class="text-center">${{ $order->subtotal }}</td>
+                                        <td class="text-center">Rp.{{number_format($order->subtotal )}}</td>
                                         <td class="text-center">
                                             @if ($order->status == 'delivered')
                                                 <span class="badge bg-success">Delivered</span>
                                             @elseif($order->status == 'canceled')
-                                                <span class="badge bg-success">Canceled</span>
+                                                <span class="badge bg-danger">Canceled</span>
                                             @else
-                                                <span class="badge bg-success">Ordered</span>
+                                                <span class="badge bg-warning">Ordered</span>
                                             @endif
-                                        </td>
-                                        <td class="text-center">{{ $order->orderitems->count() }}</td>
-                                        <td class="text-center">{{ $order->delivered_date }}</td>
-                                        <td class="text-center">
-                                            <a href="{{ route('user.order-details', ['order_id' => $order->id]) }}">
-                                                <div class="list-icon-function view-icon">
-                                                    <div class="item eye">
-                                                        <i class="fa fa-eye"></i>
-                                                    </div>
-                                                </div>
-                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -49,7 +49,7 @@
           </div>
           <div class="order-info__item">
             <label>Total</label>
-            <span>${{ $order->subtotal}}</span>
+            <span>Rp. {{ number_format($order->subtotal) }}</span>
           </div>
           <div class="order-info__item">
             <label>Payment Method</label>
@@ -72,8 +72,8 @@
                   <td>
                     {{$item->product->name}} x {{$item->quantity}}
                   </td>
-                  <td>
-                    ${{$item->price}}
+                  <td class="text-end"> {{-- ⬅️ this makes it right-aligned --}}
+                    Rp.{{ number_format($item->price) }}
                   </td>
                 </tr>
                 @endforeach
@@ -83,7 +83,7 @@
               <tbody>
                 <tr>
                   <th>TOTAL</th>
-                  <td>${{$order->subtotal}}</td>
+                  <td class="text-end">Rp. {{ number_format($item->price) }}</td>
                 </tr>
               </tbody>
             </table>

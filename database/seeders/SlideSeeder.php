@@ -15,17 +15,16 @@ class SlideSeeder extends Seeder
     {
         DB::table('slides')->insert([
             [
-                'slide_id' => 'slide-001', // Changed from 'id'
+                'slide_id' => 'slide-001', 
                 'tagline' => 'New Arrivals',
                 'title' => 'Check Out Our Latest Collection',
                 'subtitle' => 'Fresh styles just for you!',
                 'link' => '/shop',
-                'image' => 'slide1.jpg', // Provide an image name/path
+                'image' => 'slide1.jpg', 
                 'status' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // Add more slides as needed
         ]);
     }
 }

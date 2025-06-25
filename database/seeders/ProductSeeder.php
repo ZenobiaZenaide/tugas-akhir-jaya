@@ -16,7 +16,7 @@ class ProductSeeder extends Seeder
     {
         DB::table('products')->insert([
             [
-                'product_id' => 'prod-001', // Changed from 'id'
+                'product_id' => 'prod-001', 
                 'name' => 'Sample Product One',
                 'slug' => Str::slug('Sample Product One'),
                 'short_description' => 'This is a short description for sample product one.',
@@ -27,14 +27,13 @@ class ProductSeeder extends Seeder
                 'stock_status' => 'instock',
                 'featured' => true,
                 'quantity' => 50,
-                'image' => 'default-product.png', // Optional
-                'images' => null, // Optional, can be JSON array of image names/paths
-                'category_id' => 'cat-002', // Ensure this category ID exists
-                'brand_id' => 'brand-001',   // Ensure this brand ID exists
+                'image' => 'default-product.png', 
+                'images' => null, 
+                'category_id' => 'cat-002', 
+                'brand_id' => 'brand-001',  
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // Add more products as needed
         ]);
     }
 }

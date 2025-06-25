@@ -84,9 +84,6 @@
                                 <th class="text-center">SKU</th>
                                 <th class="text-center">Category</th>
                                 <th class="text-center">Brand</th>
-                                <th class="text-center">Options</th>
-                                <th class="text-center">Return Status</th>
-                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,15 +105,6 @@
                                     <td class="text-center">{{ $item->product->SKU }}</td>
                                     <td class="text-center">{{ $item->product->category->name }}</td>
                                     <td class="text-center">{{ $item->product->brand->name }}</td>
-                                    <td class="text-center">{{ $item->options }}</td>
-                                    <td class="text-center">{{ $item->rstatus == 0 ? 'No' : 'Yes' }}</td>
-                                    <td class="text-center">
-                                        <div class="list-icon-function view-icon">
-                                            <div class="item eye">
-                                                <i class="icon-eye"></i>
-                                            </div>
-                                        </div>
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -155,7 +143,7 @@
                             <th>Subtotal</th>
                             <td>${{ $order->subtotal }}</td>
                             <th>Discount</th>
-                            <td>${{ $order->discount }}</td>
+                            <td>Rp.{{number_format($order->discount )}}</td>
                         </tr>
                         <tr>
                             <th>Payment Mode</th>
@@ -164,10 +152,6 @@
                             <td>
                                 @if ($transaction->status == 'approved')
                                     <span class="badge bg-success">Approved</span>
-                                @elseif($transaction->status == 'declined')
-                                    <span class="badge bg-"> Declined</span>
-                                @elseif($transaction->status == 'refunded')
-                                    <span class="badge bg-secondary">Refunded</span>
                                 @else
                                     <span class="badge bg-warning">Pending</span>
                                 @endif
@@ -186,8 +170,6 @@
                         <div class="col-md-3">
                             <div class="select">
                                 <select id="order_status" name="order_status">
-                                    <option value="ordered" {{ $order->status == "ordered" ? "selected" : "" }}> Ordered
-                                    </option>
                                     <option value="delivered" {{ $order->status == "delivered" ? "selected" : "" }}>
                                         Delivered
                                     </option>

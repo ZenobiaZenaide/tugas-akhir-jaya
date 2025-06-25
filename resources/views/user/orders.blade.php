@@ -53,10 +53,8 @@
                                         <th>Name</th>
                                         <th class="text-center">Phone</th>
                                         <th class="text-center">Subtotal</th>
-
                                         <th class="text-center">Status</th>
-                                        <th class="text-center">Order Date</th>
-                                        <th class="text-center">Items</th>
+                                        <th class="text-center">Order Items</th>
                                         <th class="text-center">Delivered On</th>
                                         <th></th>
                                     </tr>
@@ -67,7 +65,7 @@
                                             <td class="text-center">{{ $order->id }}</td>
                                             <td class="text-center">{{ $order->name }}</td>
                                             <td class="text-center">{{ $order->phone }}</td>
-                                            <td class="text-center">${{ $order->subtotal }}</td>
+                                            <td class="text-center">Rp. {{number_format($order->subtotal)}}</td>
                                             <td class="text-center">
                                                 @if ($order->status == 'delivered')
                                                     <span class="badge bg-success">Delivered</span>

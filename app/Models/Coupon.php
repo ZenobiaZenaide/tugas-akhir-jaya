@@ -9,9 +9,9 @@ class Coupon extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'coupon_id'; // Specify the new primary key
-    public $incrementing = false;       // Indicate that the primary key is not auto-incrementing
-    protected $keyType = 'string';      // Indicate that the primary key is a string
+    protected $primaryKey = 'coupon_id'; 
+    public $incrementing = false;    
+    protected $keyType = 'string';     
 
     /**
      * The attributes that are mass assignable.

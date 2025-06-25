@@ -128,18 +128,10 @@
                         <tr>
                             <th>Order No</th>
                             <td>{{ $order->id }}</td>
-                            <th>Mobile</th>
-                            <td>{{ $order->mobile }}</td>
-                            <th>Zip Code</th>
-                            <td>{{ $order->zip }}</td>
                         </tr>
                         <tr>
                             <th>Order Date</th>
                             <td>{{ $order->created_at }}</td>
-                            <th>Delivered Date</th>
-                            <td>{{ $order->delivered_date }}</td>
-                            <th>Canceled Date</th>
-                            <td>{{ $order->canceled_date }}</td>
                         </tr>
                         <tr>
                             <th>Order Status</th>
@@ -173,9 +165,6 @@
                                 <th class="text-center">SKU</th>
                                 <th class="text-center">Category</th>
                                 <th class="text-center">Brand</th>
-                                <th class="text-center">Options</th>
-                                <th class="text-center">Return Status</th>
-                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -196,15 +185,6 @@
                                 <td class="text-center">{{ $item->product->SKU}}</td>
                                 <td class="text-center">{{ $item->product->category->name}}</td>
                                 <td class="text-center">{{ $item->product->brand->name}}</td>
-                                <td class="text-center">{{ $item->options}}</td>
-                                <td class="text-center">{{ $item->rstatus == 0 ? "No":"Yes"}}</td>
-                                <td class="text-center">
-                                    <div class="list-icon-function view-icon">
-                                        <div class="item eye">
-                                            <i class="icon-eye"></i>
-                                        </div>
-                                    </div>
-                                </td>
                             </tr>
                             @endforeach
                         </tbody>

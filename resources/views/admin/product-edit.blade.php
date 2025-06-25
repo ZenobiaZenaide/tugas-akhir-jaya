@@ -28,13 +28,12 @@
                     </li>
                 </ul>
             </div>
-            <!-- form-add-product -->
             <form class="tf-section-2 form-add-product" method="POST" enctype="multipart/form-data"
                 action="{{ route('admin.product-update')}}">
                 @csrf
                 @method('PUT')
                 <div class="wg-box">
-                    <input type="hidden" name="product_id" value="{{ $product->product_id }}"/> {{-- Changed name and value --}}
+                    <input type="hidden" name="product_id" value="{{ $product->product_id }}"/> 
                     <fieldset class="name">
                         <div class="body-title mb-10">Product ID<span class="tf-color-1">*</span>
                         </div>
@@ -48,10 +47,10 @@
                             value="{{ $product->name }}" aria-required="true" required="">
                         <div class="text-tiny">Do not exceed 100 characters when entering the
                             product name.</div>
+                            @error('name')
+                            <span class="alert alert-danger text-center"> {{ $message }}
+                            @enderror
                     </fieldset>
-                    @error('name')
-                        <span class="alert alert-danger text-center"> {{ $message }}
-                        @enderror
 
                         <fieldset class="slug">
                             <div class="body-title mb-10">Slug <span class="tf-color-1">*</span></div>
@@ -111,26 +110,25 @@
                                 <div class="body-title mb-10">Short Description <span class="tf-color-1">*</span></div>
                                 <textarea class="mb-10 ht-150" name="short_description" placeholder="Short Description" tabindex="0"
                                     aria-required="true" required="">{{ $product->short_description }} </textarea>
-                                <div class="text-tiny">Do not exceed 100 characters when entering the
-                                    product name.</div>
-                            </fieldset>
+                                <div class="text-tiny">Maksimal kata adalah 250 kata.</div>
 
                             @error('short_description')
-                                <span class="alert alert-danger text-center"> {{ $message }}
-                                @enderror
+                            <span class="alert alert-danger text-center"> {{ $message }}
+                            @enderror
+
+                            </fieldset>
 
                                 <fieldset class="description">
                                     <div class="body-title mb-10">Description <span class="tf-color-1">*</span>
                                     </div>
                                     <textarea class="mb-10" name="description" placeholder="Description" tabindex="0" aria-required="true"
                                         required="">{{ $product->description }}</textarea>
-                                    <div class="text-tiny">Do not exceed 100 characters when entering the
-                                        product name.</div>
+                                    <div class="text-tiny">Maksimal kata adalah 1000 kata.</div>
                                 </fieldset>
 
                                 @error('description')
                                     <span class="alert alert-danger text-center"> {{ $message }}
-                                    @enderror
+                                @enderror
 
                 </div>
                 <div class="wg-box">
@@ -183,11 +181,6 @@
                                     </label>
                                 </div>
                             </div>
-                        
-                            <!-- Remove All Photos Button -->
-                            <div class="remove-all-photos">
-                                <button type="button" id="removeAllGalleryPhotos" class="tf-button">Remove All Photos</button>
-                            </div>
                         </fieldset>
                         
                         @error('images')
@@ -201,25 +194,24 @@
                                     <input class="mb-10" type="text" placeholder="Enter regular price"
                                         name="regular_price" tabindex="0" value="{{ $product->regular_price }}"
                                         aria-required="true" required="">
+                                        @error('regular_price')
+                                        <span class="alert alert-danger text-center"> {{ $message }}
+                                        @enderror
                                 </fieldset>
 
 
-                                @error('regular_price')
-                                <span class="alert alert-danger text-center"> {{ $message }}
-                                @enderror
 
                                 <fieldset class="name">
                                     <div class="body-title mb-10">Sale Price <span class="tf-color-1">*</span></div>
                                     <input class="mb-10" type="text" placeholder="Enter sale price"
                                         name="sale_price" tabindex="0" value="{{ $product->sale_price }}"
                                         aria-required="true" required="">
-                                </fieldset>
-
 
                                 @error('sale_price')
                                 <span class="alert alert-danger text-center"> {{ $message }}
                                 @enderror
 
+                                </fieldset>
                             </div>
 
                             <div class="cols gap22">
@@ -228,12 +220,11 @@
                                     </div>
                                     <input class="mb-10" type="text" placeholder="Enter SKU" name="SKU"
                                         tabindex="0" value="{{ $product->SKU }}" aria-required="true" required="">
+                                        @error('SKU')
+                                        <span class="alert alert-danger text-center"> {{ $message }}
+                                        @enderror
                                 </fieldset>
 
-
-                                @error('SKU')
-                                <span class="alert alert-danger text-center"> {{ $message }}
-                                @enderror
 
                                 <fieldset class="name">
                                     <div class="body-title mb-10">Quantity <span class="tf-color-1">*</span>
@@ -241,11 +232,11 @@
                                     <input class="mb-10" type="text" placeholder="Enter quantity" name="quantity"
                                         tabindex="0" value="{{ $product->quantity }}" aria-required="true"
                                         required="">
+                                        @error('quantity')
+                                        <span class="alert alert-danger text-center"> {{ $message }}
+                                        @enderror
                                 </fieldset>
-
-                                @error('quantity')
-                                <span class="alert alert-danger text-center"> {{ $message }}
-                                @enderror
+                                    
 
                             </div>
 
@@ -260,11 +251,6 @@
                                     </div>
                                 </fieldset>
 
-
-                                @error('sale_price')
-                                <span class="alert alert-danger text-center"> {{ $message }}
-                                @enderror
-
                                 <fieldset class="name">
                                     <div class="body-title mb-10">Featured</div>
                                     <div class="select mb-10">
@@ -275,14 +261,9 @@
                                     </div>
                                 </fieldset>
 
-
-                                @error('featured')
-                                <span class="alert alert-danger text-center"> {{ $message }}
-                                @enderror
-
                             </div>
                             <div class="cols gap10">
-                                <button class="tf-button w-full" type="submit">Add product</button>
+                                <button class="tf-button w-full" type="submit">Save product</button>
                             </div>
                 </div>
             </form>
@@ -294,26 +275,21 @@
 @push('scripts')
 <script>
 $(function(){
-    // Handle the main image file change (for 'myFile')
     $('#myFile').on("change", function(e){
-        const [file] = this.files;  // Get the selected file
+        const [file] = this.files;  
 
         if(file){
-            // Show the preview image
+
             $("#imgpreview img").attr('src', URL.createObjectURL(file));
-            $("#imgpreview").show();  // Make sure the preview container is visible
+            $("#imgpreview").show(); 
         } else {
-            // If no file is selected, hide the preview
-            $("#imgpreview").hide();  // Hide the preview if no image is selected
+            $("#imgpreview").hide();  
         }
     });
 
-    // Handle the gallery images file change (for 'gFile')
     $('#gFile').on("change", function(e){
-        const gphotos = this.files;  // Get all selected gallery images
-        $("#gallery-images-container").empty();  // Clear the current gallery preview before adding new images
-
-        // Loop through each selected file and create an image preview
+        const gphotos = this.files;  
+        $("#gallery-images-container").empty(); 
         $.each(gphotos, function(key, val){
             $("#gallery-images-container").prepend(`
                 <div class="item gitem">
@@ -323,36 +299,28 @@ $(function(){
         });
     });
 
-    // Handle "Remove All Photos" functionality
+
     $('#removeAllGalleryPhotos').on("click", function(){
-        // Clear the gallery preview container
         $("#gallery-images-container").empty();
 
-        // Reset the gallery image input
         $('#gFile').val(null);
     });
 
-    
-    // Automatically generate the slug from the name field
     $("input[name='name']").on("change", function(){
         $("input[name='slug']").val(StringToSlug($(this).val()));
     });
 
-    // Add functionality to remove the selected image when clicked on the remove icon
     $(document).on('click', '.remove-icon', function(){
-        // Clear the image input
         $('#myFile').val(null);
-        
-        // Hide the preview
         $("#imgpreview").hide();
     });
 });
 
-// Function to convert text to slug format
+
 function StringToSlug(Text){
     return Text.toLowerCase()
-    .replace(/[^\w ]+/g, "")  // Remove non-alphanumeric characters
-    .replace(/ +/g, "-");  // Replace spaces with hyphens
+    .replace(/[^\w ]+/g, "") 
+    .replace(/ +/g, "-");  
 }
 </script>
 @endpush

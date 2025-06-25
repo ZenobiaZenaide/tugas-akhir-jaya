@@ -33,7 +33,7 @@
                 enctype="multipart/form-data">
                 @csrf
                 <div class="body-title">Brand ID <span class="tf-color-1">*</span></div>
-                <input class="flex-grow" type="text" placeholder="Brand ID" name="brand_id" {{-- Changed name from 'id' to 'brand_id' --}}
+                <input class="flex-grow" type="text" placeholder="Brand ID" name="brand_id" 
                     tabindex="0" value="{{old('brand_id')}}" aria-required="true" required="">
                 @error('brand_id') <span class="text-danger">{{$message}}</span> @enderror
                 <div class="body-title">Brand Name <span class="tf-color-1">*</span></div>

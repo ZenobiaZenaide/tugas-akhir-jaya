@@ -22,17 +22,6 @@
 
         <div class="wg-box">
             <div class="flex items-center justify-between gap10 flex-wrap">
-                <div class="wg-filter flex-grow">
-                    <form class="form-search">
-                        <fieldset class="name">
-                            <input type="text" placeholder="Search here..." class="" name="name"
-                                tabindex="2" value="" aria-required="true" required="">
-                        </fieldset>
-                        <div class="button-submit">
-                            <button class="" type="submit"><i class="icon-search"></i></button>
-                        </div>
-                    </form>
-                </div>
                 <a class="tf-button style-1 w208" href="{{ route('admin.category-add')}}"><i
                         class="icon-plus"></i>Add new</a>
             </div>
@@ -44,7 +33,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Slug</th>
                                 <th>Products</th>
@@ -54,7 +43,7 @@
                         <tbody>
                             @foreach($categories as $category )
                             <tr>
-                                <td>{{ $category->category_id }}</td>  {{-- Changed from $category->id --}}
+                                <td>{{ $category->category_id }}</td> 
                                 <td class="pname">
                                     <div class="image">
                                         <img src="{{asset('uploads/categories')}}/{{$category->image}}" alt="{{$category->name}}" class="image">
@@ -67,12 +56,12 @@
                                 <td><a href="#" target="_blank">1</a></td>
                                 <td>
                                     <div class="list-icon-function">
-                                        <a href="{{ route('admin.category-edit', ['category_id' => $category->category_id])}}"> {{-- Changed 'id' to 'category_id' --}}
+                                        <a href="{{ route('admin.category-edit', ['category_id' => $category->category_id])}}"> 
                                             <div class="item edit">
                                                 <i class="icon-edit-3"></i>
                                             </div>
                                         </a>
-                                        <form action="{{ route('admin.category-delete',['category_id'=> $category->category_id])}}" method="POST"> {{-- Changed 'id' to 'category_id' --}}
+                                        <form action="{{ route('admin.category-delete',['category_id'=> $category->category_id])}}" method="POST"> 
                                             @csrf
                                             @method('DELETE')
                                             <div class="item text-danger delete">

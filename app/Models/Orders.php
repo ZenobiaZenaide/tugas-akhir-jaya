@@ -19,9 +19,8 @@ class Orders extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function orderitems() // Or whatever you named this relationship method
+    public function orderitems() 
     {
-        // Ensure the foreign key here is 'order_id'
         return $this->hasMany(OrderItem::class, 'order_id', 'id');
     }
 

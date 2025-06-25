@@ -15,16 +15,15 @@ class CouponSeeder extends Seeder
     {
         DB::table('coupons')->insert([
             [
-                'coupon_id' => 'coupon-001', // Changed from 'id'
+                'coupon_id' => 'coupon-001', 
                 'code' => 'SUMMER20',
-                'type' => 'percent', // 'fixed' or 'percent'
-                'value' => 10, // Percentage or fixed amount
-                'cart_value' => 50, // Minimum cart value to apply coupon
+                'type' => 'percent', 
+                'value' => 10,
+                'cart_value' => 50, 
                 'expiry_date' => now()->addMonths(3)->toDateString(),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // Add more coupons as needed
         ]);
     }
 }

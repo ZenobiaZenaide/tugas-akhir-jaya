@@ -64,11 +64,9 @@ class CartController extends Controller
 
     
         if (isset($coupon_code)) {
-            // Get cart subtotal and clean it
-            $rawSubtotal = Cart::instance('cart')->subtotal(); // e.g., "8,000.00"
-            $cleanSubtotal = floatval(str_replace(',', '', $rawSubtotal)); // 8000.00
+            $rawSubtotal = Cart::instance('cart')->subtotal(); 
+            $cleanSubtotal = floatval(str_replace(',', '', $rawSubtotal)); 
     
-            // Find valid coupon
             $coupon = Coupon::where('code', $coupon_code)
                 ->where('expiry_date', '>=', Carbon::today())
                 ->where('cart_value', '<=', $cleanSubtotal)
@@ -98,9 +96,8 @@ class CartController extends Controller
     {
         $discount = 0;
     
-        // Clean and convert subtotal to float
-        $rawSubtotal = Cart::instance('cart')->subtotal(); // e.g., "8,000.00"
-        $subtotal = floatval(str_replace(',', '', $rawSubtotal)); // 8000.00
+        $rawSubtotal = Cart::instance('cart')->subtotal(); 
+        $subtotal = floatval(str_replace(',', '', $rawSubtotal)); 
     
         if (Session::has('coupon')) {
             $coupon = Session::get('coupon');
@@ -156,11 +153,11 @@ class CartController extends Controller
                 'name' => 'required|max:100',
                 'phone' => 'required|numeric|digits:12',
                 'zip' => 'required|numeric|digits:5',
-                'state' => 'required',
-                'city' =>'required',
-                'address' => 'required',
-                'locality' => 'required',
-                'landmark' => 'required',
+                'state' => 'required|max:100',
+                'city' =>'required|max:100',
+                'address' => 'required|max:255',
+                'locality' => 'required|max:100',
+                'landmark' => 'required|max:100',
             ]);
 
             
@@ -186,7 +183,7 @@ class CartController extends Controller
 
         $order = new Orders();
         $order->user_id = $user_id;
-        $order->subtotal = (float) $subtotal;  // Ensure numeric format
+        $order->subtotal = (float) $subtotal;  
         $order->discount = (float) $discount; 
         $order->name = $address->name;
         $order->phone = $address->phone;
@@ -200,26 +197,30 @@ class CartController extends Controller
         $order->save();
 
 
-        // dd(Cart::instance('cart'));
+
         foreach(Cart::instance('cart')->content() as $item){
             // dd($item);
             $orderItem = new OrderItem();
-            // No need to set $orderItem->id here if it's auto-generated
-            $orderItem->product_id = $item->id; // This is the product's ID from the cart
-            $orderItem->order_id = $order->id; // This is the ID of the newly created order
+            $orderItem->product_id = $item->id; 
+            $orderItem->order_id = $order->id; 
             $orderItem->price = $item->price;
             $orderItem->quantity = $item->qty;
             // dd($orderItem);
-            $orderItem->save();  // Error occurs here if OrderItem's own 'id' is not handled
+            $orderItem->save();  
         }
 
-        if($request->mode == "card"){
-
-        }
-        elseif($request->mode == "cod"){
+        if($request->mode == "cod"){
             $transaction = new Transaction();
             $transaction->user_id = $user_id;
-            $transaction->order_id = $order->id; // Corrected from orders_id
+            $transaction->order_id = $order->id; 
+            $transaction->mode = $request->mode;
+            $transaction->status = "pending";
+            $transaction->save();      
+        }
+        elseif($request->mode == "card"){
+            $transaction = new Transaction();
+            $transaction->user_id = $user_id;
+            $transaction->order_id = $order->id;
             $transaction->mode = $request->mode;
             $transaction->status = "pending";
             $transaction->save();

@@ -95,7 +95,7 @@ class AdminController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $brand = new Brand();
-        $brand->brand_id = $request->brand_id; // Changed from 'id'
+        $brand->brand_id = $request->brand_id; 
         $brand->name = $request->name;
         $brand->slug = Str::slug($request->name);
         if($request->hasFile('image')){
@@ -108,23 +108,20 @@ class AdminController extends Controller
         return redirect()->route('admin.brands')->with('status','Brand has been added succesfully!');
     }
 
-    public function brand_edit($brand_id){ // Changed parameter from $id
-        $brand = Brand::find($brand_id); // Changed from $id
+    public function brand_edit($brand_id){ 
+        $brand = Brand::find($brand_id); 
         return view('admin.brands-edit', compact('brand'));
     }
 
     public function brand_update(Request $request){
         $request->validate([
-            // 'brand_id' => 'required|unique:brands,brand_id,'.$request->brand_id.',brand_id', // Assuming brand_id itself is not updatable or handled carefully
             'name' => 'required',
-            'slug' => 'required|unique:brands,slug,'.$request->brand_id.',brand_id', // Ensure slug uniqueness check uses brand_id
+            'slug' => 'required|unique:brands,slug,'.$request->brand_id.',brand_id', 
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        $brand = Brand::find($request->brand_id); // Changed from $request->id
-        // $brand->brand_id = $request->brand_id; // Usually primary keys are not updated.
+        $brand = Brand::find($request->brand_id);
         $brand->name = $request->name;
         $brand->slug = Str::slug($request->name);
-        // $brand->delete(); // This seems incorrect here, perhaps you meant to delete the old image?
         if($request->hasFile('image')){
             if(File::exists(public_path('uploads/brands').'/'.$brand->image)){
                 File::delete(public_path('uploads/brands').'/'.$brand->image);
@@ -138,8 +135,8 @@ class AdminController extends Controller
         return redirect()->route('admin.brands')->with('status','Brand has been updated succesfully!');
     }
 
-    public function brand_delete($brand_id){ // Changed parameter from $id
-        $brand = Brand::find($brand_id); // Changed from $id
+    public function brand_delete($brand_id){ 
+        $brand = Brand::find($brand_id); 
         if(File::exists(public_path('uploads/brands').'/'.$brand->image)){
             File::delete(public_path('uploads/brands').'/'.$brand->image);
         }
@@ -160,7 +157,7 @@ class AdminController extends Controller
 
     public function categories()
     {
-        $categories = Category::orderBy("category_id","DESC")->paginate(10); // Changed 'id' to 'category_id'
+        $categories = Category::orderBy("category_id","DESC")->paginate(10); 
         return view('admin.categories', ['categories' => $categories]);
     }
 
@@ -171,25 +168,25 @@ class AdminController extends Controller
     public function category_store(Request $request)
     {
         $request->validate([
-            'category_id' => 'required|unique:categories,category_id', // Changed 'id' to 'category_id' and updated the unique rule
+            'category_id' => 'required|unique:categories,category_id',
             'name' => 'required',
             'slug' => 'required|unique:categories,slug',
             'image' => 'mimes:png,jpg,jpeg|max:2048',
         ]);
 
         $category = new Category();
-        $category->category_id = $request->category_id; // Changed from $request->id
+        $category->category_id = $request->category_id; 
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
-        // It's good practice to check if a file is uploaded before trying to process it
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $file_extention = $image->extension(); // Corrected method call
+            $file_extention = $image->extension(); 
             $file_name = Carbon::now()->timestamp.'.'.$file_extention;
             $this->GenerateCategoryThumbnailsImage($image, $file_name);
             $category->image = $file_name;
         } else {
-            $category->image = null; // Or a default image path
+            $category->image = null; 
         }
         $category->save();
 
@@ -222,7 +219,7 @@ class AdminController extends Controller
     public function category_update(Request $request){
         $request->validate([
             'name' => 'required',
-            'slug' => 'required|unique:categories,slug,' . $request->id . ',category_id', // Changed 'id' to 'category_id' for the column name
+            'slug' => 'required|unique:categories,slug,' . $request->id . ',category_id', 
             'image' => 'nullable|mimes:png,jpg,jpeg|max:2048',
         ]);
 
@@ -257,7 +254,7 @@ class AdminController extends Controller
     }
 
     public function product_add(){
-        $categories = Category::select('category_id','name')->orderBy('name')->get(); // Changed 'id' to 'category_id'
+        $categories = Category::select('category_id','name')->orderBy('name')->get(); 
         $brands = Brand::select('brand_id','name')->orderBy('name')->get(); 
         return view('admin.product-add',compact('categories','brands'));
     }
@@ -267,10 +264,10 @@ class AdminController extends Controller
             'product_id' => 'required|unique:products,product_id',
             'name' => 'required',
             'slug' => 'required|unique:products,slug',
-            'short_description' => 'required',
-            'description' => 'required',
-            'regular_price' => 'required',
-            'sale_price' => 'required',
+            'short_description' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'regular_price' => 'required|numeric|max:999999.99',
+            'sale_price' => 'required|numeric|max:999999.99',
             'SKU' => 'required',
             'stock_status' => 'required',
             'featured' => 'required',
@@ -281,8 +278,14 @@ class AdminController extends Controller
             'images.*' =>'nullable|mimes:png,jpg,jpeg|max:2048'
         ]);
 
+        if ($request->regular_price > 9999999 || $request->sale_price > 9999999) {
+            return back()->withInput()->withErrors([
+                'regular_price' => 'The regular price or sale price cannot exceed 7 digits.',
+            ]);
+        }
+
         $product = new Product();
-        $product->product_id = $request->product_id; // Changed from $request->id
+        $product->product_id = $request->product_id; 
         $product->name = $request->name;
         $product->slug = Str::slug($request->name);
         $product->short_description = $request->short_description;
@@ -324,7 +327,6 @@ class AdminController extends Controller
             }
         }
     
-        // Store gallery images as a comma-separated string in the database
         $product->images = implode(',', $gallery_arr);
         $product->save();
         return redirect()->route('admin.products')->with('status','Product has been added succesfully');
@@ -345,34 +347,32 @@ class AdminController extends Controller
         })->save($destinationPathThumbnail. '/' .$imageName);
     }
 
-    public function product_edit($product_id){ // Changed parameter from $id
-        $product = Product::find($product_id); // Changed from $id
-        $categories = Category::select('category_id','name')->orderBy('name')->get(); // Changed 'id' to 'category_id'
+    public function product_edit($product_id){ 
+        $product = Product::find($product_id); 
+        $categories = Category::select('category_id','name')->orderBy('name')->get();
         $brands = Brand::Select('brand_id','name')->orderBy('name')->get(); // Changed from 'id'
         return view('admin.product-edit', compact('product', 'categories', 'brands'));
     }
 
     public function product_update(Request $request){
         $request->validate([
-            // 'product_id' => 'required|unique:products,product_id,'.$request->product_id.',product_id', // Primary key usually not updated
-            'name' => 'required',
-            'slug' => 'required|unique:products,slug,' . $request->product_id . ',product_id', // Changed $request->id to $request->product_id and ',id' to ',product_id'
-            'short_description' => 'required',
-            'description' => 'required',
-            'regular_price' => 'required',
-            'sale_price' => 'required',
-            'SKU' => 'required',
+            'name' => 'required|max:100',
+            'slug' => 'required|unique:products,slug,' . $request->product_id . ',product_id', 
+            'short_description' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
+            'regular_price' => 'required|numeric|max:999999.99',
+            'sale_price' => 'required|numeric|max:999999.99',
+            'SKU' => 'required|max:20',
             'stock_status' => 'required',
             'featured' => 'required',
-            'quantity' => 'required',
+            'quantity' => 'required|numeric|max:999999.99',
             'image' => 'nullable|mimes:png,jpg,jpeg|max:2048',
             'category_id' => 'required',
             'brand_id' => 'required',
             'images.*' =>'nullable|mimes:png,jpg,jpeg|max:2048'
         ]);
 
-        $product = Product::find($request->product_id); // Changed from $request->id
-        // $product->product_id = $request->product_id; // Usually primary keys are not updated.
+        $product = Product::find($request->product_id); 
         $product->name = $request->name;
 
         if ($product->slug !== Str::slug($request->name)) {
@@ -435,8 +435,8 @@ class AdminController extends Controller
 
     }
 
-    public function product_delete($product_id){ // Changed parameter from $id
-        $product = Product::find($product_id); // Changed from $id
+    public function product_delete($product_id){ 
+        $product = Product::find($product_id); 
         if(File::exists(public_path('uploads/products').'/'.$product->image)){
             File::delete(public_path('uploads/products').'/'.$product->image);
         }
@@ -463,7 +463,7 @@ class AdminController extends Controller
         ]);
 
         $coupon = new Coupon();
-        $coupon->coupon_id = $request->coupon_id; // Changed from $request->id
+        $coupon->coupon_id = $request->coupon_id; 
         $coupon->code = $request->code;
         $coupon->type = $request->type;
         $coupon->value = $request->value;
@@ -477,13 +477,12 @@ class AdminController extends Controller
         return view('admin.coupon-add');
     }
 
-    public function coupon_edit($coupon_id){ // Changed parameter from $id
-        $coupon = Coupon::find($coupon_id); // Changed from $id
+    public function coupon_edit($coupon_id){
+        $coupon = Coupon::find($coupon_id); 
         return view('admin.coupon-edit', compact('coupon'));
     }
 
     public function coupon_update(Request $request){
-        // Validate only the fields that must be updated
         $request->validate([
             'code' => 'required',
             'type' => 'required',
@@ -492,35 +491,27 @@ class AdminController extends Controller
             'expiry_date' => 'required|date',
         ]);
     
-        // Find the coupon to be updated
-        $coupon = Coupon::find($request->coupon_id); // Changed from $request->id
-    
-        // Check if the code has been changed and is not unique
-        // If the code has been changed, check for duplicates
+        $coupon = Coupon::find($request->coupon_id); 
         if ($coupon->code !== $request->code && Coupon::where('code', $request->code)->exists()) {
             return redirect()->back()->withErrors(['code' => 'The coupon code already exists. Please choose another one.']);
         }
     
-        // Update the coupon fields
-        $coupon->type = $request->type;  // Update only type
+        $coupon->type = $request->type; 
         $coupon->value = $request->value;
         $coupon->cart_value = $request->cart_value;
         $coupon->expiry_date = $request->expiry_date;
     
-        // Save the updated coupon
         $coupon->save();
     
-        // Redirect with a success message
         return redirect()->route('admin.coupons')->with('status', 'Coupon has been updated successfully!');
     }
     
-    public function coupon_delete($coupon_id){ // Changed parameter from $id
-        $coupon = Coupon::find($coupon_id); // Changed from $id
+    public function coupon_delete($coupon_id){ 
+        $coupon = Coupon::find($coupon_id); 
         $coupon->delete();
         return redirect()->route('admin.coupons')->with('status','Coupon has been deleted Successfully');
     }
 
-    //Orders
 
     public function orders(){
         $orders = Orders::orderBy('created_at','DESC')->paginate(5);
@@ -529,13 +520,12 @@ class AdminController extends Controller
 
     public function order_details($orders_id){
         $order = Orders::find($orders_id);
-        $orderitems = OrderItem::where('order_id', $orders_id)->orderBy('id')->paginate(5); // Changed 'orders_id' to 'order_id'
-        $transaction = Transaction::where('order_id', $orders_id)->first(); // Changed 'orders_id' to 'order_id'
+        $orderitems = OrderItem::where('order_id', $orders_id)->orderBy('id')->paginate(5); 
+        $transaction = Transaction::where('order_id', $orders_id)->first(); 
         return view('admin.order-details', compact('order', 'orderitems', 'transaction'));
     }
 
     public function update_order_status(Request $request){
-        // dd($request->all());
 
         $order = Orders::find($request->orders_id);
         $order->status = $request->order_status;
@@ -548,7 +538,7 @@ class AdminController extends Controller
         $order->save();
 
         if($request->order_status == 'delivered'){
-            $transaction = Transaction::where('order_id', $request->orders_id)->first(); // Changed 'orders_id' to 'order_id'
+            $transaction = Transaction::where('order_id', $request->orders_id)->first(); 
             $transaction->status = 'approved';
             $transaction->save();
         }
@@ -558,7 +548,7 @@ class AdminController extends Controller
     //SLIDES
 
     public function slides(){
-        $slides = Slides::orderBy('slide_id', 'DESC')->paginate(5); // Changed 'id' to 'slide_id'
+        $slides = Slides::orderBy('slide_id', 'DESC')->paginate(5); 
         return view('admin.slides', compact('slides'));
     }
     
@@ -577,7 +567,7 @@ class AdminController extends Controller
             'status' => 'required|boolean',
         ]);
         $slide = new Slides();
-        $slide->slide_id = $request->slide_id; // Changed from $request->id (assuming form field is named slide_id)
+        $slide->slide_id = $request->slide_id; 
         $slide->tagline = $request->tagline;
         $slide->title = $request->title;
         $slide->subtitle = $request->subtitle;
@@ -602,23 +592,22 @@ class AdminController extends Controller
         })->save($destinationPath.'/'.$imageName);
     }
 
-    public function slide_edit($slide_id){ // Changed parameter from $id
-        $slide = Slides::find($slide_id); // Changed from $id
+    public function slide_edit($slide_id){ 
+        $slide = Slides::find($slide_id); 
         return view('admin.slide-edit',compact('slide'));
     }
 
     public function slide_update(Request $request){
         $request->validate([
-            // 'slide_id' => 'required|unique:slides,slide_id,'.$request->slide_id.',slide_id', // Primary key usually not updated
+        
             'tagline' => 'required',
             'title' => 'required',
             'subtitle' => 'required',
             'link' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Allow null if image is not being updated
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
             'status' => 'required|boolean',
         ]);
-        $slide = Slides::find($request->slide_id); // Changed from $request->id (assuming hidden input name is slide_id)
-        // $slide->slide_id = $request->slide_id; // Usually primary keys are not updated.
+        $slide = Slides::find($request->slide_id); 
         $slide->tagline = $request->tagline;
         $slide->title = $request->title;
         $slide->subtitle = $request->subtitle;
@@ -640,8 +629,8 @@ class AdminController extends Controller
         return redirect()->route('admin.slides')->with('status', 'Slide added succesfully!');
     }
 
-    public function slide_delete($slide_id){ // Changed parameter from $id
-        $slide = Slides::find($slide_id); // Changed from $id
+    public function slide_delete($slide_id){ 
+        $slide = Slides::find($slide_id); 
         if(File::exists(public_path('uploads/slides').'/'.$slide->image)){
             File::delete(public_path('uploads/slides').'/'.$slide->image);
         }

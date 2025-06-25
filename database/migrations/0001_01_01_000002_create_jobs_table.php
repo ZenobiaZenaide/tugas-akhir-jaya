@@ -35,8 +35,8 @@ return new class extends Migration
         });
 
         Schema::create('failed_jobs', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // Changed from id()
-            $table->string('uuid')->unique(); // Keep this if needed for other purposes
+            $table->uuid('id')->primary(); 
+            $table->string('uuid')->unique(); 
             $table->text('connection');
             $table->text('queue');
             $table->longText('payload');

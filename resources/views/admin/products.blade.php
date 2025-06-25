@@ -21,17 +21,6 @@
 
             <div class="wg-box">
                 <div class="flex items-center justify-between gap10 flex-wrap">
-                    <div class="wg-filter flex-grow">
-                        <form class="form-search">
-                            <fieldset class="name">
-                                <input type="text" placeholder="Search here..." class="" name="name"
-                                    tabindex="2" value="" aria-required="true" required="">
-                            </fieldset>
-                            <div class="button-submit">
-                                <button class="" type="submit"><i class="icon-search"></i></button>
-                            </div>
-                        </form>
-                    </div>
                     <a class="tf-button style-1 w208" href="{{ route('admin.product-add')}}"><i class="icon-plus"></i>Add new</a>
                 </div>
                 <div class="table-responsive">
@@ -57,7 +46,7 @@
                         <tbody>
                             @foreach($products as $product)
                             <tr>
-                                <td>{{ $product->product_id }}</td> {{-- Changed from $product->id --}}
+                                <td>{{ $product->product_id }}</td> 
                                 <td class="name">
                                     <div class="image">
                                         <img src="{{ asset('uploads/products/thumbnails')}}/{{ $product->image }}" alt="" class="image">
@@ -73,21 +62,16 @@
                                 <td>{{ $product->category->name }}</td>
                                 <td>{{ $product->brand->name }}</td>
                                 <td>{{ $product->featured == 0 ? "No":"Yes"}}</td>
-                                <td>{{ $product->status }}</td>
+                                <td>{{ $product->stock_status }}</td>
                                 <td>{{ $product->quantity }}</td>
                                 <td>
                                     <div class="list-icon-function">
-                                        <a href="#" target="_blank">
-                                            <div class="item eye">
-                                                <i class="icon-eye"></i>
-                                            </div>
-                                        </a>
-                                        <a href="{{ route('admin.product-edit', ['product_id'=>$product->product_id])}}" {{-- Changed 'id' to 'product_id' --}}
+                                        <a href="{{ route('admin.product-edit', ['product_id'=>$product->product_id])}}" 
                                             <div class="item edit">
                                                 <i class="icon-edit-3"></i>
                                             </div>
                                         </a>
-                                        <form action="{{ route('admin.product-delete', ['product_id'=> $product->product_id])}}" method="POST"> {{-- Changed 'id' to 'product_id' --}}
+                                        <form action="{{ route('admin.product-delete', ['product_id'=> $product->product_id])}}" method="POST"> 
                                             @csrf
                                             @method('DELETE')
                                             <div class="item text-danger delete">

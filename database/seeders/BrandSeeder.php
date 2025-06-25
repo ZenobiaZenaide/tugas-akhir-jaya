@@ -16,14 +16,13 @@ class BrandSeeder extends Seeder
     {
         DB::table('brands')->insert([
             [
-                'brand_id' => 'brand-001', // Changed from 'id'
+                'brand_id' => 'brand-001',
                 'name' => 'Awesome Brand',
                 'slug' => Str::slug('Awesome Brand'),
-                'image' => 'default-brand.png', // Optional: provide an image name/path
+                'image' => 'default-brand.png', 
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            // Add more brands as needed
         ]);
     }
 }

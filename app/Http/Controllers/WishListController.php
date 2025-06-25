@@ -13,6 +13,7 @@ class WishListController extends Controller
     }
 
     public function add_to_wishlist(Request $request){
+        // dd($request);
         Cart::instance('wishlist')->add(
             $request->id,
             $request->name,

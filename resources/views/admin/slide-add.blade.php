@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('content')
     <div class="main-content-inner">
-        <!-- main-content-wrap -->
         <div class="main-content-wrap">
             <div class="flex items-center flex-wrap justify-between gap20 mb-27">
                 <h3>Slide</h3>
@@ -91,9 +90,8 @@
                     </div>
                 </form>
             </div>
-            <!-- /new-category -->
+
         </div>
-        <!-- /main-content-wrap -->
     </div>
 @endsection
 

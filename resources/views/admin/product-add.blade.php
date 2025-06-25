@@ -27,7 +27,6 @@
                     </li>
                 </ul>
             </div>
-            <!-- form-add-product -->
             <form class="tf-section-2 form-add-product" method="POST" enctype="multipart/form-data"
                 action="{{ route('admin.product-store') }}">
                 @csrf
@@ -35,7 +34,7 @@
                     <fieldset class="name">
                         <div class="body-title mb-10">Product ID <span class="tf-color-1">*</span>
                         </div>
-                        <input class="mb-10" type="text" placeholder="Enter product ID" name="product_id" {{-- Changed name from 'id' --}}
+                        <input class="mb-10" type="text" placeholder="Enter product ID" name="product_id"
                             tabindex="0" value="{{old('product_id')}}" aria-required="true" required="">
                     </fieldset>
                     @error('id')
@@ -184,24 +183,20 @@
                                     <input class="mb-10" type="text" placeholder="Enter regular price"
                                         name="regular_price" tabindex="0" value="{{ old('regular_price') }}"
                                         aria-required="true" required="">
+                                        @error('regular_price')
+                                        <span class="alert alert-danger text-center"> {{ $message }}
+                                        @enderror
                                 </fieldset>
-
-
-                                @error('regular_price')
-                                <span class="alert alert-danger text-center"> {{ $message }}
-                                @enderror
 
                                 <fieldset class="name">
                                     <div class="body-title mb-10">Sale Price <span class="tf-color-1">*</span></div>
                                     <input class="mb-10" type="text" placeholder="Enter sale price"
                                         name="sale_price" tabindex="0" value="{{ old('sale_price') }}"
                                         aria-required="true" required="">
+                                        @error('sale_price')
+                                        <span class="alert alert-danger text-center"> {{ $message }}
+                                        @enderror
                                 </fieldset>
-
-
-                                @error('sale_price')
-                                <span class="alert alert-danger text-center"> {{ $message }}
-                                @enderror
 
                             </div>
 

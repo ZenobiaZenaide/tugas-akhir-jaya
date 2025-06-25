@@ -17,36 +17,11 @@ use App\Models\Slides;
 class ShopController extends Controller
 {
     public function index(request $request){
-        $o_column = "";
-        $o_order = "";
-        $order = $request->query('order') ? $request->query('order') : -1;
+       
+        $slides = Slides::where('status', 1)->take(3)->get();
+        $products = Product::paginate(12); 
 
-        //Switch casenya filter di shopindex
-        switch($order){
-            case 1:
-                $o_column='created_at';
-                $o_order='DESC';
-                break;
-            case 2:
-                $o_column='created_at';
-                $o_order='ASC';
-                break;
-            case 3:
-                $o_column='regular_price';
-                $o_order='ASC';
-                break;
-            case 4:
-                $o_column='regular_price';
-                $o_order='DESC';
-                break;
-            default:
-                $o_column = 'product_id'; // Changed from 'id' to 'product_id'
-                $o_order = 'DESC';
-                
-        }
-        $slides = Slides::where('status',1)->get()->take(3);
-        $products = Product::orderBy($o_column,$o_order)->paginate(12); 
-        return view('shopindex', compact('slides','products','order'));
+        return view('shopindex', compact('slides', 'products'));
     }
 
     public function product_details($product_slug){

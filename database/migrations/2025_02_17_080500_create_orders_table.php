@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // This table's ID remains uuid
-            $table->string('user_id'); // This column definition is fine
+            $table->uuid('id')->primary(); 
+            $table->string('user_id'); 
             $table ->decimal('subtotal');
             $table ->decimal('discount')->default(0);
             $table ->string('name');
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->date('delivered_date')->nullable();
             $table->date('canceled_date')->nullable();
             $table->timestamps();
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade'); // Changed 'id' to 'user_id'
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade'); 
         });
 
         

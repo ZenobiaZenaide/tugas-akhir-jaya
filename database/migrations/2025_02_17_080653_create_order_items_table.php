@@ -12,15 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('order_items', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // This table's ID remains uuid
-            $table->string('product_id'); // Changed from uuid('product_id')
-            $table->uuid('order_id');   // Remains uuid, references orders.id
+            $table->uuid('id')->primary(); 
+            $table->string('product_id'); 
+            $table->uuid('order_id');   
             $table->decimal('price');
             $table->integer('quantity');
             $table->longText('options')->nullable();
             $table->boolean('rstatus')->default(false);
             $table->timestamps();
-            $table->foreign('product_id')->references('product_id')->on('products')->onDelete('cascade'); // Changed 'id' to 'product_id'
+            $table->foreign('product_id')->references('product_id')->on('products')->onDelete('cascade'); 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }

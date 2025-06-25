@@ -28,12 +28,10 @@ class MonthSeeder extends Seeder
             ['name' => 'December'],
         ];
 
-        // Iterate and create records using the MonthName model
-        // The HasUuids trait in the model will automatically generate the UUID
+
         foreach ($months as $month) {
             MonthName::create($month);
         }
 
-        // DB::table('month_names')->insert($months); // Remove or comment out the old DB facade insert
     }
 }

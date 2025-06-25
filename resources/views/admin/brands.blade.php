@@ -22,17 +22,6 @@
 
         <div class="wg-box">
             <div class="flex items-center justify-between gap10 flex-wrap">
-                <div class="wg-filter flex-grow">
-                    <form class="form-search">
-                        <fieldset class="name">
-                            <input type="text" placeholder="Search here..." class="" name="name"
-                                tabindex="2" value="" aria-required="true" required="">
-                        </fieldset>
-                        <div class="button-submit">
-                            <button class="" type="submit"><i class="icon-search"></i></button>
-                        </div>
-                    </form>
-                </div>
                 <a class="tf-button style-1 w208" href="{{ route('admin.brands-add') }}"><i
                         class="icon-plus"></i>Add new</a>
             </div>
@@ -55,7 +44,7 @@
                             @foreach($brands as $brand )
                             <tr>
                                 <!-- <td>{{ $loop->iteration }}</td> -->
-                                <td>{{ $brand->brand_id }}</td> {{-- Changed from $brand->id --}}
+                                <td>{{ $brand->brand_id }}</td> 
                                 <td>
                                     <div class="image">
                                         <img src="{{asset('uploads/brands')}}/{{$brand->image}}" alt="{{$brand->name}}" class="image">
@@ -68,11 +57,12 @@
                                 <td><a href="#" target="_blank">1</a></td>
                                 <td>
                                     <div class="list-icon-function">
-                                        <a href="{{ route('admin.brands-edit', ['brand_id'=> $brand->brand_id])}}" {{-- Changed 'id' to 'brand_id' --}}
-                                            class="tf-button style-1 active">Edit</a>
-                                        </td>
-                                        <td>
-                                            <form action="{{ route('admin.brands-delete',['brand_id'=> $brand->brand_id])}}" method="POST"> {{-- Changed 'id' to 'brand_id' --}}
+                                        <a href="{{ route('admin.brands-edit', ['brand_id'=> $brand->brand_id])}}" 
+                                                <div class="item edit">
+                                                <i class="icon-edit-3"></i>
+                                            </div>
+                                        </a>
+                                            <form action="{{ route('admin.brands-delete',['brand_id'=> $brand->brand_id])}}" method="POST"> 
                                                 @csrf
                                                 @method('DELETE')
                                                 <div class="item text-danger delete">
